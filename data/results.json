@@ -1,0 +1,856 @@
+{
+ "n_evidence": 1288,
+ "layers": {
+  "germanic": 70,
+  "ogham": 402,
+  "latin": 139,
+  "pictish": 90,
+  "christian": 74,
+  "other": 14,
+  "hillfort": 87,
+  "roman": 397,
+  "dyke": 5,
+  "royal": 10
+ },
+ "n_mapped_not_roman": 891,
+ "layer_nation": {
+  "germanic": {
+   "England": 70
+  },
+  "ogham": {
+   "England": 2,
+   "Republic of Ireland": 386,
+   "Wales": 2,
+   "offshore": 2,
+   "Isle of Man": 1,
+   "Northern Ireland": 5,
+   "Scotland": 4
+  },
+  "latin": {
+   "England": 11,
+   "Wales": 128
+  },
+  "pictish": {
+   "Scotland": 90
+  },
+  "christian": {
+   "Republic of Ireland": 35,
+   "Scotland": 2,
+   "Northern Ireland": 3,
+   "England": 27,
+   "Wales": 4,
+   "offshore": 3
+  },
+  "other": {
+   "Wales": 2,
+   "England": 12
+  },
+  "hillfort": {
+   "England": 14,
+   "Scotland": 48,
+   "Republic of Ireland": 3,
+   "Northern Ireland": 2,
+   "Wales": 6,
+   "Isle of Man": 14
+  },
+  "roman": {
+   "England": 269,
+   "Scotland": 63,
+   "Wales": 53,
+   "Republic of Ireland": 2,
+   "Northern Ireland": 2,
+   "offshore": 8
+  },
+  "dyke": {
+   "England": 5
+  },
+  "royal": {
+   "England": 7,
+   "Wales": 1,
+   "Scotland": 2
+  }
+ },
+ "culture_points": {
+  "germanic": 75,
+  "irish": 403,
+  "brittonic": 143,
+  "pictish": 90
+ },
+ "hill": {
+  "atlas_total": 4147,
+  "dated": 87,
+  "share": 0.02097902097902098,
+  "by_country": {
+   "England": {
+    "n": 1225,
+    "dated": 14,
+    "share": 0.011428571428571429
+   },
+   "Isle of Man": {
+    "n": 30,
+    "dated": 14,
+    "share": 0.4666666666666667
+   },
+   "Northern Ireland": {
+    "n": 32,
+    "dated": 2,
+    "share": 0.0625
+   },
+   "Republic of Ireland": {
+    "n": 475,
+    "dated": 3,
+    "share": 0.00631578947368421
+   },
+   "Scotland": {
+    "n": 1695,
+    "dated": 48,
+    "share": 0.02831858407079646
+   },
+   "Wales": {
+    "n": 690,
+    "dated": 6,
+    "share": 0.008695652173913044
+   }
+  },
+  "reliability": {
+   "B - Medium": 31,
+   "D - None": 28,
+   "A - High": 5,
+   "C - Low": 23
+  },
+  "reliable_ab": 36,
+  "no_reliability": 28,
+  "also_roman": 30,
+  "also_iron_age": 38,
+  "also_post800": 11,
+  "promontory": 39,
+  "promontory_share": 0.4482758620689655,
+  "promontory_all_share": 0.30094043887147337,
+  "coastal": 34,
+  "coastal_share": 0.39080459770114945,
+  "coastal_all_share": 0.18037135278514588,
+  "area_med": 0.4,
+  "area_med_all": 0.41,
+  "radiocarbon": 27,
+  "coastal_ratio": 2.166666666666667,
+  "gb_dated": 68,
+  "scotland_share_of_dated": 0.5517241379310345
+ },
+ "eastwest": {
+  "germanic_n": 75,
+  "brittonic_n": 143,
+  "germanic_median_lon": -0.05383,
+  "brittonic_median_lon": -4.09028,
+  "germanic_east_of_m2": 0.9866666666666667,
+  "brittonic_west_of_m3": 0.958041958041958,
+  "brit_to_ger_med_km": 163.64330272443897,
+  "ger_to_brit_med_km": 120.41786061668203,
+  "brit_within_50km_of_ger": 1,
+  "ger_within_50km_of_brit": 3
+ },
+ "profile": [
+  {
+   "lon_from": -6.0,
+   "lon_to": -5.5,
+   "germanic": 0,
+   "brittonic": 1,
+   "germanic_share": 0.0
+  },
+  {
+   "lon_from": -5.5,
+   "lon_to": -5.0,
+   "germanic": 0,
+   "brittonic": 10,
+   "germanic_share": 0.0
+  },
+  {
+   "lon_from": -5.0,
+   "lon_to": -4.5,
+   "germanic": 0,
+   "brittonic": 37,
+   "germanic_share": 0.0
+  },
+  {
+   "lon_from": -4.5,
+   "lon_to": -4.0,
+   "germanic": 0,
+   "brittonic": 28,
+   "germanic_share": 0.0
+  },
+  {
+   "lon_from": -4.0,
+   "lon_to": -3.5,
+   "germanic": 0,
+   "brittonic": 45,
+   "germanic_share": 0.0
+  },
+  {
+   "lon_from": -3.5,
+   "lon_to": -3.0,
+   "germanic": 0,
+   "brittonic": 16,
+   "germanic_share": 0.0
+  },
+  {
+   "lon_from": -3.0,
+   "lon_to": -2.5,
+   "germanic": 0,
+   "brittonic": 4,
+   "germanic_share": 0.0
+  },
+  {
+   "lon_from": -2.5,
+   "lon_to": -2.0,
+   "germanic": 1,
+   "brittonic": 1,
+   "germanic_share": 0.5
+  },
+  {
+   "lon_from": -2.0,
+   "lon_to": -1.5,
+   "germanic": 11,
+   "brittonic": 0,
+   "germanic_share": 1.0
+  },
+  {
+   "lon_from": -1.5,
+   "lon_to": -1.0,
+   "germanic": 8,
+   "brittonic": 0,
+   "germanic_share": 1.0
+  },
+  {
+   "lon_from": -1.0,
+   "lon_to": -0.5,
+   "germanic": 6,
+   "brittonic": 0,
+   "germanic_share": 1.0
+  },
+  {
+   "lon_from": -0.5,
+   "lon_to": 0.0,
+   "germanic": 16,
+   "brittonic": 1,
+   "germanic_share": 0.9411764705882353
+  },
+  {
+   "lon_from": 0.0,
+   "lon_to": 0.5,
+   "germanic": 13,
+   "brittonic": 0,
+   "germanic_share": 1.0
+  },
+  {
+   "lon_from": 0.5,
+   "lon_to": 1.0,
+   "germanic": 3,
+   "brittonic": 0,
+   "germanic_share": 1.0
+  },
+  {
+   "lon_from": 1.0,
+   "lon_to": 1.5,
+   "germanic": 16,
+   "brittonic": 0,
+   "germanic_share": 1.0
+  },
+  {
+   "lon_from": 1.5,
+   "lon_to": 2.0,
+   "germanic": 1,
+   "brittonic": 0,
+   "germanic_share": 1.0
+  }
+ ],
+ "surfaces": {
+  "sigma_km": 20.0,
+  "threshold": 0.1,
+  "germanic_km2": 47771.427280066775,
+  "brittonic_km2": 21061.116284224285,
+  "irish_km2": 35484.28536900859,
+  "pictish_km2": 25123.709594123462,
+  "ger_brit_overlap_km2": 0.0,
+  "land_km2": 328215.3329659339
+ },
+ "ogham": {
+  "records": 1838,
+  "spots": 402,
+  "by_nation": {
+   "England": 2,
+   "Republic of Ireland": 386,
+   "Wales": 2,
+   "offshore": 2,
+   "Isle of Man": 1,
+   "Northern Ireland": 5,
+   "Scotland": 4
+  },
+  "ireland_share": 0.972636815920398,
+  "smr_ogham": 402,
+  "smr_ogham_moved": 169
+ },
+ "latin": {
+  "n": 139,
+  "by_nation": {
+   "England": 11,
+   "Wales": 128
+  },
+  "by_county": {
+   "Dyfed": 49,
+   "Gwynedd": 29,
+   "West Glamorgan": 12,
+   "South Glamorgan": 11,
+   "Clwyd": 9,
+   "Mid Glamorgan": 9,
+   "Powys": 7,
+   "Cornwall": 3,
+   "Somerset": 2,
+   "Gwent": 2,
+   "Devon": 1,
+   "Lincolnshire": 1,
+   "Gloucestershire": 1,
+   "Lancashire": 1,
+   "Cheshire": 1,
+   "Durham": 1
+  },
+  "wales_share": 0.920863309352518,
+  "dyfed": 49,
+  "gwynedd": 29,
+  "glamorgan": 32,
+  "cornwall_devon": 4,
+  "dyfed_share": 0.35251798561151076,
+  "dyfed_wales_share": 0.3828125
+ },
+ "pictish": {
+  "n": 90,
+  "wikipedia_survive": 350
+ },
+ "roman": {
+  "n": 397,
+  "towns": 182,
+  "forts": 215,
+  "late": 237,
+  "late_towns": 148,
+  "late_forts": 89,
+  "late_share": 0.5969773299748111,
+  "late_town_share": 0.8131868131868132,
+  "late_fort_share": 0.413953488372093,
+  "ger_town_med_km": 9.317781340393324,
+  "random_town_med_km": 12.989678199583551,
+  "ger_within_10km_town": 0.52,
+  "random_within_10km_town": 0.3545,
+  "england_towns": 159
+ },
+ "christian": {
+  "n": 74,
+  "dated": 40,
+  "undated_irish": 34,
+  "by_nation": {
+   "Republic of Ireland": 35,
+   "Scotland": 2,
+   "Northern Ireland": 3,
+   "England": 27,
+   "Wales": 4,
+   "offshore": 3
+  }
+ },
+ "germanic": {
+  "n": 70,
+  "site_dated": 1
+ },
+ "timeline_ad500": {
+  "year": 500,
+  "hillfort": 87,
+  "hillfort_site": 87,
+  "germanic": 69,
+  "germanic_site": 0,
+  "latin": 139,
+  "latin_site": 0,
+  "ogham": 402,
+  "ogham_site": 0,
+  "pictish": 90,
+  "pictish_site": 0,
+  "christian": 37,
+  "christian_site": 3,
+  "royal": 7,
+  "royal_site": 7,
+  "dyke": 5,
+  "dyke_site": 3,
+  "other": 14,
+  "other_site": 0
+ },
+ "site_dated_total": 141,
+ "type_dated_total": 750,
+ "kingdoms": {
+  "n": 24,
+  "groups": {
+   "brittonic": 14,
+   "irish": 1,
+   "pictish": 1,
+   "germanic": 8
+  },
+  "zones": [
+   {
+    "name": "Gododdin",
+    "group": "brittonic",
+    "r_km": 55,
+    "n": 12,
+    "germanic": 0,
+    "brittonic": 0,
+    "irish": 0,
+    "pictish": 6,
+    "untyped": 6,
+    "hillforts": 6,
+    "christian": 0,
+    "matching_share": 0.0
+   },
+   {
+    "name": "Alt Clut (later Strathclyde)",
+    "group": "brittonic",
+    "r_km": 50,
+    "n": 6,
+    "germanic": 0,
+    "brittonic": 1,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 5,
+    "hillforts": 5,
+    "christian": 0,
+    "matching_share": 1.0
+   },
+   {
+    "name": "Rheged",
+    "group": "brittonic",
+    "r_km": 75,
+    "n": 8,
+    "germanic": 0,
+    "brittonic": 1,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 7,
+    "hillforts": 7,
+    "christian": 0,
+    "matching_share": 1.0
+   },
+   {
+    "name": "Elmet",
+    "group": "brittonic",
+    "r_km": 35,
+    "n": 1,
+    "germanic": 0,
+    "brittonic": 0,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 1,
+    "hillforts": 0,
+    "christian": 1,
+    "matching_share": null
+   },
+   {
+    "name": "Ebrauc",
+    "group": "brittonic",
+    "r_km": 30,
+    "n": 1,
+    "germanic": 0,
+    "brittonic": 0,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 1,
+    "hillforts": 0,
+    "christian": 1,
+    "matching_share": null
+   },
+   {
+    "name": "Gwynedd",
+    "group": "brittonic",
+    "r_km": 50,
+    "n": 35,
+    "germanic": 0,
+    "brittonic": 30,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 5,
+    "hillforts": 2,
+    "christian": 2,
+    "matching_share": 1.0
+   },
+   {
+    "name": "Powys",
+    "group": "brittonic",
+    "r_km": 45,
+    "n": 7,
+    "germanic": 0,
+    "brittonic": 4,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 3,
+    "hillforts": 2,
+    "christian": 1,
+    "matching_share": 1.0
+   },
+   {
+    "name": "Pengwern",
+    "group": "brittonic",
+    "r_km": 22,
+    "n": 1,
+    "germanic": 0,
+    "brittonic": 0,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 1,
+    "hillforts": 1,
+    "christian": 0,
+    "matching_share": null
+   },
+   {
+    "name": "Dyfed",
+    "group": "brittonic",
+    "r_km": 40,
+    "n": 41,
+    "germanic": 0,
+    "brittonic": 36,
+    "irish": 2,
+    "pictish": 0,
+    "untyped": 3,
+    "hillforts": 2,
+    "christian": 0,
+    "matching_share": 0.9473684210526315
+   },
+   {
+    "name": "Brycheiniog",
+    "group": "brittonic",
+    "r_km": 25,
+    "n": 8,
+    "germanic": 0,
+    "brittonic": 8,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 0,
+    "hillforts": 0,
+    "christian": 0,
+    "matching_share": 1.0
+   },
+   {
+    "name": "Ergyng",
+    "group": "brittonic",
+    "r_km": 22,
+    "n": 0,
+    "germanic": 0,
+    "brittonic": 0,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 0,
+    "hillforts": 0,
+    "christian": 0,
+    "matching_share": null
+   },
+   {
+    "name": "Glywysing",
+    "group": "brittonic",
+    "r_km": 30,
+    "n": 32,
+    "germanic": 0,
+    "brittonic": 31,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 1,
+    "hillforts": 1,
+    "christian": 0,
+    "matching_share": 1.0
+   },
+   {
+    "name": "Gwent",
+    "group": "brittonic",
+    "r_km": 22,
+    "n": 2,
+    "germanic": 0,
+    "brittonic": 1,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 1,
+    "hillforts": 1,
+    "christian": 0,
+    "matching_share": 1.0
+   },
+   {
+    "name": "Dumnonia",
+    "group": "brittonic",
+    "r_km": 85,
+    "n": 9,
+    "germanic": 0,
+    "brittonic": 5,
+    "irish": 1,
+    "pictish": 0,
+    "untyped": 3,
+    "hillforts": 0,
+    "christian": 1,
+    "matching_share": 0.8333333333333334
+   },
+   {
+    "name": "Dál Riata",
+    "group": "irish",
+    "r_km": 55,
+    "n": 6,
+    "germanic": 0,
+    "brittonic": 0,
+    "irish": 2,
+    "pictish": 0,
+    "untyped": 4,
+    "hillforts": 4,
+    "christian": 0,
+    "matching_share": 1.0
+   },
+   {
+    "name": "Picts (Fortriu)",
+    "group": "pictish",
+    "r_km": 90,
+    "n": 67,
+    "germanic": 0,
+    "brittonic": 0,
+    "irish": 1,
+    "pictish": 57,
+    "untyped": 9,
+    "hillforts": 9,
+    "christian": 0,
+    "matching_share": 0.9827586206896551
+   },
+   {
+    "name": "Bernicia",
+    "group": "germanic",
+    "r_km": 45,
+    "n": 6,
+    "germanic": 2,
+    "brittonic": 0,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 4,
+    "hillforts": 3,
+    "christian": 0,
+    "matching_share": 1.0
+   },
+   {
+    "name": "Deira",
+    "group": "germanic",
+    "r_km": 45,
+    "n": 4,
+    "germanic": 2,
+    "brittonic": 0,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 2,
+    "hillforts": 1,
+    "christian": 1,
+    "matching_share": 1.0
+   },
+   {
+    "name": "Lindsey",
+    "group": "germanic",
+    "r_km": 35,
+    "n": 1,
+    "germanic": 1,
+    "brittonic": 0,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 0,
+    "hillforts": 0,
+    "christian": 0,
+    "matching_share": 1.0
+   },
+   {
+    "name": "East Angles",
+    "group": "germanic",
+    "r_km": 55,
+    "n": 9,
+    "germanic": 8,
+    "brittonic": 0,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 1,
+    "hillforts": 0,
+    "christian": 0,
+    "matching_share": 1.0
+   },
+   {
+    "name": "Essex",
+    "group": "germanic",
+    "r_km": 40,
+    "n": 4,
+    "germanic": 2,
+    "brittonic": 0,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 2,
+    "hillforts": 0,
+    "christian": 2,
+    "matching_share": 1.0
+   },
+   {
+    "name": "Kent",
+    "group": "germanic",
+    "r_km": 40,
+    "n": 19,
+    "germanic": 12,
+    "brittonic": 0,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 7,
+    "hillforts": 0,
+    "christian": 5,
+    "matching_share": 1.0
+   },
+   {
+    "name": "Sussex",
+    "group": "germanic",
+    "r_km": 40,
+    "n": 14,
+    "germanic": 12,
+    "brittonic": 0,
+    "irish": 0,
+    "pictish": 0,
+    "untyped": 2,
+    "hillforts": 2,
+    "christian": 0,
+    "matching_share": 1.0
+   },
+   {
+    "name": "Gewisse (later Wessex)",
+    "group": "germanic",
+    "r_km": 40,
+    "n": 14,
+    "germanic": 11,
+    "brittonic": 0,
+    "irish": 1,
+    "pictish": 0,
+    "untyped": 2,
+    "hillforts": 1,
+    "christian": 1,
+    "matching_share": 0.9166666666666666
+   }
+  ],
+  "empty": [
+   "Ergyng"
+  ],
+  "no_typed": [
+   "Elmet",
+   "Ebrauc",
+   "Pengwern",
+   "Ergyng"
+  ],
+  "n_brittonic": 14,
+  "n_germanic": 8
+ },
+ "coverage": {
+  "wd_items_frame": 102712,
+  "pleiades_frame": 1526,
+  "smr_ringforts": 31431,
+  "lowland_km2": 9578.780879036669,
+  "places_gb": 16896,
+  "places_other": 505
+ },
+ "events": [
+  {
+   "from": "410",
+   "to": "410",
+   "label": "Roman rule ends",
+   "note": "The Romano-British depose Roman officials around 410; Honorius refuses Britain help.",
+   "article": "End of Roman rule in Britain",
+   "url": "https://en.wikipedia.org/wiki/End_of_Roman_rule_in_Britain"
+  },
+  {
+   "from": "429",
+   "to": "429",
+   "label": "Germanus visits",
+   "note": "Bishop Germanus of Auxerre visits Britain to combat Pelagianism.",
+   "article": "Germanus of Auxerre",
+   "url": "https://en.wikipedia.org/wiki/Germanus_of_Auxerre"
+  },
+  {
+   "from": "449",
+   "to": "449",
+   "label": "Hengist and Horsa (legend)",
+   "note": "The Anglo-Saxon Chronicle, compiled from the 9th century, dates their arrival to 449.",
+   "article": "Hengist and Horsa",
+   "url": "https://en.wikipedia.org/wiki/Hengist_and_Horsa"
+  },
+  {
+   "from": "477",
+   "to": "477",
+   "label": "Ælle lands (legend)",
+   "note": "The Chronicle's foundation story of Sussex.",
+   "article": "Kingdom of Sussex",
+   "url": "https://en.wikipedia.org/wiki/Kingdom_of_Sussex"
+  },
+  {
+   "from": "493",
+   "to": "516",
+   "label": "Badon",
+   "note": "A British victory; proposed dates include 493, 501 and 516.",
+   "article": "Battle of Badon",
+   "url": "https://en.wikipedia.org/wiki/Battle_of_Badon"
+  },
+  {
+   "from": "500",
+   "to": "545",
+   "label": "Gildas writes",
+   "note": "Usually dated to the 540s, now thought quite possibly earlier.",
+   "article": "De Excidio et Conquestu Britanniae",
+   "url": "https://en.wikipedia.org/wiki/De_Excidio_et_Conquestu_Britanniae"
+  },
+  {
+   "from": "536",
+   "to": "536",
+   "label": "The dust veil",
+   "note": "An eruption cools the northern hemisphere for several years.",
+   "article": "Volcanic winter of 536",
+   "url": "https://en.wikipedia.org/wiki/Volcanic_winter_of_536"
+  },
+  {
+   "from": "541",
+   "to": "549",
+   "label": "Plague of Justinian",
+   "note": "Plague victims at Edix Hill near Cambridge show it reached Britain.",
+   "article": "Plague of Justinian",
+   "url": "https://en.wikipedia.org/wiki/Plague_of_Justinian"
+  },
+  {
+   "from": "547",
+   "to": "547",
+   "label": "Ida in Bernicia",
+   "note": "Said to have taken the kingdom about 547.",
+   "article": "Bryneich",
+   "url": "https://en.wikipedia.org/wiki/Bryneich"
+  },
+  {
+   "from": "597",
+   "to": "597",
+   "label": "Augustine in Kent",
+   "note": "The Gregorian mission reaches Kent.",
+   "article": "Kingdom of Kent",
+   "url": "https://en.wikipedia.org/wiki/Kingdom_of_Kent"
+  },
+  {
+   "from": "600",
+   "to": "600",
+   "label": "Catraeth",
+   "note": "The Gododdin attack Catraeth, perhaps Catterick, around 600.",
+   "article": "Battle of Catraeth",
+   "url": "https://en.wikipedia.org/wiki/Battle_of_Catraeth"
+  },
+  {
+   "from": "627",
+   "to": "627",
+   "label": "Paulinus at Yeavering",
+   "note": "Bede: 36 days of preaching and baptism at the royal vill.",
+   "article": "Yeavering",
+   "url": "https://en.wikipedia.org/wiki/Yeavering"
+  }
+ ],
+ "n_events": 12,
+ "n_civitates": 16,
+ "meta": {
+  "title": "Britain in AD 500: what the ground tells us",
+  "doi": "10.5281/zenodo.23735820",
+  "page": "https://tristan-hotham.github.io/britain-500/",
+  "repo": "https://github.com/Tristan-Hotham/britain-500",
+  "blog": "https://blog.tristanhotham.com/2026/10/28/britain-500/"
+ }
+}
