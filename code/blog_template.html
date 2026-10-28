@@ -1,0 +1,145 @@
+<!-- wp:paragraph -->
+<p><em>Maps of Britain in AD 500 show neat kingdoms with borders. Almost nothing written at the time survives. So I mapped what the ground can actually place: {{n_mapped_not_roman|int}} pieces of evidence, and {{kingdoms.n|int}} kingdoms we can name but cannot draw.</em></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://tristan-hotham.github.io/britain-500/">Explore the interactive version</a></div>
+<!-- /wp:button --><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://doi.org/10.5281/zenodo.23735820">Read the paper</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:paragraph -->
+<p>You have probably seen one of those maps: Britain around AD 500 as a patchwork of kingdoms, Gododdin and Rheged in the north, Gwynedd and Dumnonia in the west, Kent, Sussex and the East Angles in the east, each in its own colour. I love them. But they hide an awkward fact. Gildas, a British monk, is the only writer of any length close to the time, and even his book could date from anywhere between the late 400s and the 540s. Bede wrote in 731. Most of the kingdom names reach us through texts written centuries later.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>So I tried the other way round. I started with what archaeology and the national records can place on a map: hillforts that people went back to, Anglo-Saxon cemeteries, memorial stones carved in Latin and in the Irish ogham alphabet, Pictish symbol stones and early churches. Only then did I lay the kingdom names on top, as faint zones with a note on where each name is first written down.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">What the ground can place</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_map.png|Map of Britain and Ireland with coloured haze and dots: purple Pictish stones in north-east Scotland, green ogham stones across southern Ireland, teal inscribed stones in Wales, orange Anglo-Saxon sites in eastern and southern England, ochre reused hillforts around the coasts, and italic kingdom names|Every piece of evidence I could place for the years around AD 500. Filled dots have their own dating; hollow dots are dated only by type. The haze is a smoothed density of each tradition. Italic names are approximate kingdom zones, not borders.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The map holds {{layers.ogham|int}} ogham find-spots, {{layers.latin|int}} Latin inscribed stones, {{layers.pictish|int}} Pictish stones, {{layers.hillfort|int}} hillforts with dating evidence for AD 400 to 800, {{layers.christian|int}} early churches and monasteries and {{layers.germanic|int}} Anglo-Saxon cemeteries and settlements, plus a short list of famous high-status sites and dykes. That is uneven, and I will come back to why. But a few patterns come through loud and clear.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Graves in the east, stones in the west</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Put the Anglo-Saxon cemeteries next to the inscribed stones and Britain splits in two. The Anglo-Saxon sites have a median longitude of {{eastwest.germanic_median_lon|w2}} degrees west, almost on the Greenwich meridian. The stones and the western high-status sites sit at {{eastwest.brittonic_median_lon|w2}} degrees west, in the middle of Wales. Of {{eastwest.brittonic_n|int}} western sites, just {{eastwest.brit_within_50km_of_ger|int}} has an Anglo-Saxon site within 50 km.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_profile.png|Bar chart of site counts by half-degree of longitude: teal bars for inscribed stones peak between 5 and 3.5 degrees west, orange bars for Anglo-Saxon sites lie between 2 degrees west and 2 degrees east, with almost no overlap|Anglo-Saxon cemeteries and settlements against Latin inscribed stones and British high-status sites, Great Britain south of the Forth, by strip of longitude.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>It is worth being careful about what this shows. It is a map of two habits, not two peoples. In the east, people buried their dead with brooches, beads and weapons, or cremated them in urns. In the west, Christian Britons raised memorial stones with Latin names. A farmer in Kent who never owned a brooch, or a family in Wales too poor for a stone, is invisible here. The records are uneven too: Wikidata knows only {{layers.germanic|int}} Anglo-Saxon cemeteries and settlements that I could identify, far fewer than archaeologists have found.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Back to the hillforts, by the sea</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The Atlas of Hillforts of Britain and Ireland records {{hill.atlas_total|int}} hillforts. Just {{hill.dated|int}} ({{hill.share|pct1}}) have dating evidence for use between AD 400 and 800. {{hill.by_country.Scotland.dated|int}} of them are in Scotland, and on the Isle of Man the share is a striking {{hill.by_country.Isle of Man.share|pct}}.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_hillforts.png|Two bar charts: on the left the share of hillforts with early medieval dating evidence by country, highest on the Isle of Man; on the right reused hillforts are more often coastal and promontory forts than all hillforts|Left: share of hillforts with dating evidence for AD 400 to 800. Right: the reused forts lean towards coasts and promontories.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The reused forts are not typical. {{hill.coastal_share|pct}} are on the coast, against {{hill.coastal_all_share|pct}} of all hillforts, and {{hill.promontory_share|pct}} are promontory forts, against {{hill.promontory_all_share|pct}}. That fits the famous excavated sites: Tintagel on its Cornish headland, where a palace of the 5th or early 6th century has been traced; Dunadd in Argyll; Dumbarton Rock on the Clyde, whose king Saint Patrick wrote to. Small, defended seats by the sea, where goods from the Mediterranean came ashore. It could also partly be that coastal sites have simply been dug more often.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Across the Irish Sea</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_irishsea.png|Map of Ireland, Wales and south-west Scotland: green hollow circles for ogham stones fill southern Ireland, teal circles for inscribed stones fill Wales, with labels for Dyfed, Gwynedd, Brycheiniog, Dál Riata and the sites Dunadd, Dumbarton Rock, Dinas Powys and Tintagel|The Irish Sea world: ogham stones in Ireland, inscribed stones in Wales, and the kingdoms on either side.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Ogham is an alphabet of strokes and notches cut along the edge of a stone, used mainly for early Irish. {{ogham.ireland_share|pct}} of my {{ogham.spots|int}} ogham find-spots are in Ireland. Wikipedia says the largest group outside Ireland is in Pembrokeshire, but my data misses it, because Wikidata records most Welsh stones simply as "inscribed stones". Even so, {{latin.dyfed|int}} of the {{latin.n|int}} inscribed stones are in the old county of Dyfed in the south-west.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The written sources point the same way. Dyfed's royal line is said to have been founded by Irish settlers in the 5th century. A stone from Castell Dwyran of about 550 names a king in Latin and in ogham and calls him by the late Roman title of protector. He is often identified with Vortipor, a king Gildas attacks by name, though the spellings differ and not everyone agrees.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:pullquote -->
+<figure class="wp-block-pullquote"><blockquote><p>One stone, two alphabets, and perhaps a king who appears in Gildas.</p></blockquote></figure>
+<!-- /wp:pullquote -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Names without borders</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I placed {{kingdoms.n|int}} kingdoms on the map, {{kingdoms.n_brittonic|int}} British, {{kingdoms.n_germanic|int}} Anglo-Saxon, one Gaelic and one Pictish, each at the area its Wikipedia article points to, and counted the evidence nearby. In the south and east the zones for Kent, Sussex and the East Angles are full of Anglo-Saxon evidence; in Wales, Gwynedd and Dyfed are full of inscribed stones. In the north it falls apart. The zone I drew for Gododdin, around Edinburgh and Traprain Law, holds Pictish stones from across the Forth and hillforts with no cultural label. Elmet and Ergyng, known from texts and place-names, hold almost nothing my layers can see.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_kingdoms.png|Horizontal stacked bars for 24 kingdoms showing how many pieces of evidence lie in each zone, coloured by tradition; the Picts, Dyfed, Gwynedd and Glywysing have the most, Elmet, Ebrauc, Pengwern and Ergyng almost none|Evidence inside each kingdom zone, by tradition. The zones are my approximate placements, not borders.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Why so thin? Because nearly everything we know by name was written down long afterwards. Bede finished his history in 731. The Historia Brittonum is of the early 9th century. The Anglo-Saxon Chronicle survives in manuscripts of the 9th to the 12th centuries, and the poem Y Gododdin in a single manuscript of the later 13th century.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_sources.png|Timeline from AD 400 to 1400 with a shaded band from 450 to 550; Gildas sits inside the band, while Bede, the Historia Brittonum, the Anglo-Saxon Chronicle manuscripts and the Book of Aneirin come centuries later|When the main written sources were composed, or their surviving manuscripts made, against the decades around AD 500.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>The mid 6th century had its own disasters, a volcanic cooling from 536 and the plague of Justinian, which burials at Edix Hill near Cambridge show reached Britain. Neither shows on my map: the dating of most of this evidence is far too broad. The names are real; they mattered to the people who wrote them down. But the ground, mute as it is, is the only witness from the time.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">How I did this</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Hillforts come from the Atlas of Hillforts of Britain and Ireland (Lock and Ralston 2017), keeping those it marks with dating evidence for AD 400 to 800. Everything else comes from {{coverage.wd_items_frame|int}} Wikidata items filtered hard by type and wording, the ogham stones in Ireland's Sites and Monuments Record, Roman towns and forts from Pleiades, and a short hand-made list of famous sites, each tied to a sentence in Wikipedia that the code checks against the article text. {{site_dated_total|int}} pieces of evidence have their own dates; the other {{type_dated_total|int}} carry a typical range for their type. The haze is a kernel density with a {{surfaces.sigma_km|int}} km kernel. The kingdom zones are my own rough placements. Coverage is uneven, between countries and between heritage agencies, and the paper sets out every caveat.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://tristan-hotham.github.io/britain-500/">Explore the interactive version</a></div>
+<!-- /wp:button --><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://doi.org/10.5281/zenodo.23735820">Read the paper</a></div>
+<!-- /wp:button --><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://github.com/Tristan-Hotham/britain-500">Data and code</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Notes and sources</h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>Hillforts: Lock, G. and Ralston, I. 2017, <a href="https://hillforts.arch.ox.ac.uk">Atlas of Hillforts of Britain and Ireland</a> (CC BY-SA 4.0).</li>
+<!-- /wp:list-item --><!-- wp:list-item -->
+<li>Sites: <a href="https://www.wikidata.org">Wikidata</a> (CC0); ogham stones in the Republic of Ireland: National Monuments Service, <a href="https://www.archaeology.ie">Sites and Monuments Record</a> (CC BY 4.0); Roman places: <a href="https://pleiades.stoa.org">Pleiades</a> (CC BY 3.0).</li>
+<!-- /wp:list-item --><!-- wp:list-item -->
+<li>Texts, dates and named sites: English Wikipedia (CC BY-SA 4.0), including <a href="https://en.wikipedia.org/wiki/Sub-Roman_Britain">Sub-Roman Britain</a>, <a href="https://en.wikipedia.org/wiki/Ogham">Ogham</a>, <a href="https://en.wikipedia.org/wiki/Kingdom_of_Dyfed">Kingdom of Dyfed</a> and <a href="https://en.wikipedia.org/wiki/De_Excidio_et_Conquestu_Britanniae">De Excidio et Conquestu Britanniae</a>.</li>
+<!-- /wp:list-item --><!-- wp:list-item -->
+<li>Map layers: Itiner-e Roman roads (CC BY 4.0), AWS Terrain Tiles, Natural Earth, OS Open Names (OGL v3), GeoNames (CC BY 4.0).</li>
+<!-- /wp:list-item --><!-- wp:list-item -->
+<li>Paper, data and code: <a href="https://doi.org/10.5281/zenodo.23735820">Zenodo</a> and <a href="https://github.com/Tristan-Hotham/britain-500">GitHub</a>.</li>
+<!-- /wp:list-item --><!-- wp:list-item -->
+<li>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->

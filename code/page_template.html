@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Britain in AD 500</title>
+<meta name="description" content="What the ground tells us about Britain and Ireland around AD 500: reused hillforts, Anglo-Saxon graves, Latin and ogham stones, Pictish symbols and early churches on one interactive map, with the kingdoms we know mostly from later writers shown as uncertain zones.">
+<meta property="og:title" content="Britain in AD 500: what the ground tells us">
+<meta property="og:description" content="{{n_mapped_not_roman|int}} pieces of evidence on one map, from {{layers.hillfort|int}} hillforts with dating evidence for AD 400 to 800 to {{layers.ogham|int}} ogham find-spots, and {{kingdoms.n|int}} kingdoms we can name but not draw.">
+<meta property="og:image" content="https://tristan-hotham.github.io/britain-500/header.png">
+<meta property="og:url" content="https://tristan-hotham.github.io/britain-500/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+/* Vellum and ink. Madder = Anglo-Saxon (Germanic) evidence, woad teal = Brittonic, moss = Irish, heather = Pictish, ochre = hillforts. */
+:root{
+  --bg:#F4EEE2; --panel:#EAE2D2; --fg:#2A2520; --muted:#6B6257; --rule:#D9CFBD; --card:#FBF8F1; --border:#C9BCA5;
+  --hot:#8C3B2A; --sea:#DCE2DF; --land:#F7F2E7; --coast:#8F8473;
+  --ger:#B5562B; --bri:#2F6F73; --iri:#5E7A2E; --pic:#6C4A8A; --hf:#B8862B; --chr:#2B4470; --roy:#7D1F1F; --dyk:#7A5C3A; --rom:#7E786E; --oth:#9A8F80;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#18160F; --panel:#211E17; --fg:#EDE6D6; --muted:#A79E8F; --rule:#353026; --card:#221F18; --border:#4B4436;
+  --hot:#E59A7E; --sea:#141A1C; --land:#2A261D; --coast:#8A7F6B;
+  --ger:#E07E50; --bri:#5DB3B5; --iri:#9DBE5E; --pic:#B091D3; --hf:#E3B457; --chr:#8FA9E0; --roy:#F07A6A; --dyk:#C9A57A; --rom:#A39C90; --oth:#9A9080; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#18160F; --panel:#211E17; --fg:#EDE6D6; --muted:#A79E8F; --rule:#353026; --card:#221F18; --border:#4B4436;
+  --hot:#E59A7E; --sea:#141A1C; --land:#2A261D; --coast:#8A7F6B;
+  --ger:#E07E50; --bri:#5DB3B5; --iri:#9DBE5E; --pic:#B091D3; --hf:#E3B457; --chr:#8FA9E0; --roy:#F07A6A; --dyk:#C9A57A; --rom:#A39C90; --oth:#9A9080; color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 18px/1.62 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow-x:hidden}
+.wrap{max-width:680px;margin:0 auto;padding-block:28px 64px}
+.wrap .bleed{width:min(1080px,calc(100vw - 32px));margin-left:calc((100% - min(1080px,100vw - 32px))/2);margin-right:0}
+a{color:inherit;text-decoration-color:var(--hot);text-underline-offset:3px}
+.kicker{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.kicker b{background:var(--hot);color:var(--bg);padding:5px 8px;font-weight:500}
+header.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 24px;align-items:end;border-bottom:6px double var(--fg);padding-bottom:22px;margin-top:18px}
+h1{font:900 clamp(46px,11.5vw,98px)/.9 var(--display);letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1 em{font-style:italic;font-weight:600;color:var(--hot)}
+.mark{width:clamp(80px,18vw,150px);height:auto;display:block}
+.dek{grid-column:1/-1;font-size:21px;line-height:1.42;margin:8px 0 0;max-width:46ch}
+.byline{font:400 13px/1.4 var(--mono);color:var(--muted);margin-top:14px}
+h2{font:800 34px/1.04 var(--display);letter-spacing:-.01em;margin:52px 0 10px;text-wrap:balance}
+h2 .n{font:500 13px/1 var(--mono);color:var(--hot);display:block;letter-spacing:.1em;margin-bottom:10px}
+h3{font:600 20px/1.25 var(--display);margin:28px 0 6px}
+p{margin:0 0 16px}
+.lede::first-letter{font:900 72px/.8 var(--display);float:left;margin:6px 10px 0 0;color:var(--hot)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0 8px}
+.stats div{background:var(--card);padding:14px 12px}
+.stats b{display:block;font:900 clamp(26px,5.6vw,38px)/1 var(--display);color:var(--fg)}
+.stats b.g{color:var(--ger)} .stats b.b{color:var(--bri)} .stats b.h{color:var(--hf)}
+.stats span{font:400 12px/1.35 var(--mono);color:var(--muted);display:block;margin-top:6px}
+@media (max-width:600px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.figure{margin:26px 0 30px}
+.fig-h{font:600 19px/1.25 var(--display);margin:0 0 4px}
+.fig-sub{font:400 13px/1.45 var(--mono);color:var(--muted);margin:0 0 12px}
+.src{font:400 12px/1.45 var(--mono);color:var(--muted);margin-top:10px}
+.chart{width:100%;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--mono);fill:var(--fg)}
+.lab{font-size:12px}.lab.m{fill:var(--muted)}.lab.b{font-weight:500}.lab.s{font-size:11px}.lab.i{font-style:italic}
+.tip{position:absolute;pointer-events:none;background:var(--fg);color:var(--bg);font:400 12px/1.45 var(--mono);padding:8px 10px;border-radius:3px;max-width:280px;z-index:1000;transform:translate(-50%,calc(-100% - 12px));display:none}
+.tip b{font-weight:500}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 10px}
+.btn{font:500 12px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:8px 10px;cursor:pointer;min-height:36px}
+.btn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.chip{font:400 12px/1.2 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:16px;padding:6px 10px 6px 8px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;min-height:32px}
+.chip i{width:11px;height:11px;border-radius:50%;display:inline-block;flex:none}
+.chip[aria-pressed="false"]{opacity:.5;background:transparent}
+.chip[aria-pressed="false"] i{background:transparent!important;box-shadow:inset 0 0 0 1.5px var(--muted)}
+.chip b{font-weight:500}
+.searchbox{position:relative;flex:1 1 240px;min-width:0}
+input[type=search]{font:400 14px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:9px 10px;min-height:36px;width:100%}
+.suggest{position:absolute;left:0;right:0;top:100%;margin:2px 0 0;padding:0;list-style:none;background:var(--card);border:1px solid var(--border);z-index:1001;font:400 13px/1.3 var(--mono);display:none;max-height:340px;overflow:auto}
+.suggest li{padding:8px 10px;cursor:pointer;border-bottom:1px solid var(--rule)}
+.suggest li span{color:var(--muted)}
+.suggest li[aria-selected="true"],.suggest li:hover{background:var(--panel)}
+.timebar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
+.timebar input[type=range]{flex:1 1 240px;min-width:0;accent-color:var(--hot)}
+.when{font:600 22px/1 var(--display);min-width:8ch}
+.when small{display:block;font:400 12px/1.3 var(--mono);color:var(--muted);margin-top:4px}
+.mapwrap{position:relative}
+#lmap{height:720px;border:1px solid var(--border);background:var(--sea);border-radius:2px}
+@media (max-width:600px){#lmap{height:540px}}
+.leaflet-container{font:400 12px/1.4 var(--mono);background:var(--sea)}
+.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:var(--card);color:var(--fg);border-radius:3px;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.leaflet-popup-content{margin:12px 14px;font:400 12.5px/1.45 var(--mono);min-width:220px;max-width:300px}
+.leaflet-container a.leaflet-popup-close-button{color:var(--muted)}
+.leaflet-popup-content a{color:var(--fg)}
+.leaflet-bar a,.leaflet-bar a:hover{background:var(--card);color:var(--fg);border-bottom-color:var(--border)}
+.leaflet-control-attribution{background:color-mix(in srgb,var(--card) 85%,transparent)!important;color:var(--muted)}
+.leaflet-control-attribution a{color:var(--fg)}
+.pop b.t{font:600 17px/1.2 var(--display);display:block;margin-bottom:2px}
+.pop .c{color:var(--muted);margin-bottom:6px}
+.pop .pn{font-size:11.5px;color:var(--muted);margin:6px 0 0}
+.pop .unc{display:inline-block;font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;border:1px dashed var(--muted);padding:3px 5px;margin:2px 0 6px;color:var(--muted)}
+.kg{white-space:nowrap;font:italic 600 15px/1 var(--display);letter-spacing:.03em;text-shadow:0 0 3px var(--land),0 0 3px var(--land),0 0 6px var(--land);pointer-events:auto;cursor:pointer}
+.kg small{font:400 10px/1 var(--mono);letter-spacing:0;opacity:.75;margin-left:2px;font-style:normal}
+.kg.s{font-size:13px}
+.civ{white-space:nowrap;font:500 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-shadow:0 0 3px var(--land),0 0 3px var(--land)}
+.city{white-space:nowrap;font:500 11px/1 var(--mono);color:var(--fg);text-shadow:0 0 3px var(--land),0 0 3px var(--land),0 0 5px var(--land);pointer-events:none}
+.city i{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--fg);margin-right:4px;vertical-align:1px}
+.city.r1{font-size:10px;color:var(--muted)} .city.r1 i{width:4px;height:4px;background:var(--muted)}
+.lyrBtn{font:500 12px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:9px 11px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.lyrPanel{background:var(--card);border:1px solid var(--border);border-radius:3px;margin-top:6px;padding:10px 12px;width:250px;max-width:calc(100vw - 60px);font:400 12px/1.35 var(--mono);box-shadow:0 2px 10px rgba(0,0,0,.2);max-height:520px;overflow:auto}
+.lyrPanel .row{margin:0 0 9px}
+.lyrPanel label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.lyrPanel .sub{display:flex;align-items:center;gap:8px;margin:4px 0 0 22px;color:var(--muted)}
+.lyrPanel .sub input[type=range]{flex:1;min-width:0;accent-color:var(--hot)}
+.lyrPanel select{font:400 12px/1 var(--mono);background:var(--bg);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:4px}
+.lyrPanel .reset{font:500 11px/1 var(--mono);background:transparent;border:1px solid var(--border);color:var(--fg);border-radius:3px;padding:6px 8px;cursor:pointer}
+.lyrPanel h4{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:12px 0 8px}
+.near{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--hot);padding:12px 14px;margin-top:10px;font:400 13px/1.5 var(--mono);display:none}
+.near h4{font:600 19px/1.2 var(--display);margin:0 0 6px}
+.near ul{margin:6px 0;padding-left:18px}
+.near .mix{display:flex;height:12px;border-radius:2px;overflow:hidden;margin:6px 0 2px;background:var(--panel)}
+.legend{display:flex;gap:6px 14px;flex-wrap:wrap;font:400 12px/1.3 var(--mono);color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.legend i.hol{background:transparent!important;box-shadow:inset 0 0 0 2px var(--muted)}
+.legend i.zone{border-radius:50%;opacity:.45}
+.pull{font:600 26px/1.25 var(--display);border-left:6px solid var(--hot);padding:4px 0 4px 18px;margin:30px 0}
+.note{background:var(--panel);border:1px solid var(--rule);padding:14px 16px;font-size:16px;margin:22px 0}
+.note h3{margin-top:0}
+.caveat{background:var(--card);border:1px dashed var(--border);padding:12px 16px;font-size:16px;margin:22px 0}
+.caveat b.tag{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;background:var(--fg);color:var(--bg);padding:4px 6px;margin-right:8px}
+table.t{width:100%;border-collapse:collapse;font:400 13px/1.35 var(--mono)}
+table.t th{text-align:left;font-weight:500;color:var(--muted);border-bottom:2px solid var(--fg);padding:6px 8px 6px 0}
+table.t td{border-bottom:1px solid var(--rule);padding:7px 8px 7px 0;vertical-align:top}
+table.t td.num,table.t th.num{text-align:right;white-space:nowrap}
+table.t td small{color:var(--muted);display:block}
+table.t td b{font:600 15px/1.2 var(--display)}
+.tablewrap{overflow-x:auto}
+@media (max-width:600px){table.t .wide{display:none}}
+.bar{display:inline-flex;height:9px;width:90px;background:var(--panel);vertical-align:middle;border-radius:1px;overflow:hidden}
+.bar span{display:block;height:100%}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:20px 0}
+@media (max-width:600px){.cards{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--hf);padding:12px 14px;font:400 13px/1.5 var(--mono)}
+.card b{font:600 19px/1.2 var(--display);display:block;margin-bottom:2px}
+.card .d{color:var(--muted)}
+.card a.go{font:500 12px/1 var(--mono);display:inline-block;margin-top:8px;cursor:pointer}
+details{margin:14px 0}
+summary{font:500 13px/1.4 var(--mono);cursor:pointer;color:var(--fg);padding:8px 0}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.cta a{font:500 13px/1 var(--mono);text-decoration:none;border:1px solid var(--fg);padding:11px 14px;border-radius:3px}
+.cta a.p{background:var(--hot);border-color:var(--hot);color:var(--bg)}
+footer{border-top:6px double var(--fg);margin-top:56px;padding-top:16px;font:400 13px/1.55 var(--mono);color:var(--muted)}
+footer p{margin:0 0 10px}
+.theme{position:fixed;right:12px;bottom:12px;z-index:1002}
+.leaflet-image-layer.dens{image-rendering:auto}
+@media print{.theme,.controls,.timebar,.chips{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="kicker"><b>Data study</b><span>Early medieval</span><span>Britain and Ireland, AD 400 to 700</span></div>
+<header class="hero">
+  <h1>Britain in <em>AD&nbsp;500</em></h1>
+  <svg class="mark" viewBox="0 0 150 150" aria-hidden="true"><g id="heroMark"></g></svg>
+  <p class="dek">What the ground tells us. Reused hillforts, Anglo-Saxon graves, Latin and ogham stones, Pictish symbols and early churches on one map, with the kingdoms we know mostly from later writers shown as what they are: names without borders.</p>
+</header>
+<div class="byline">Dr Tristan Hotham, Independent researcher · October 2026 · Data: Atlas of Hillforts of Britain and Ireland; Wikidata; Wikipedia; Ireland's Sites and Monuments Record; Pleiades</div>
+
+<div class="stats">
+  <div><b>{{n_mapped_not_roman|int}}</b><span>pieces of early medieval evidence on the map, plus {{layers.roman|int}} Roman towns and forts</span></div>
+  <div><b class="h">{{layers.hillfort|int}}</b><span>of {{hill.atlas_total|int}} hillforts in the Atlas have dating evidence for AD 400 to 800 ({{hill.share|pct1}})</span></div>
+  <div><b class="g">{{eastwest.brit_within_50km_of_ger|int}}</b><span>of {{eastwest.brittonic_n|int}} western stones and high-status sites has an Anglo-Saxon grave or settlement within 50 km in my data</span></div>
+  <div><b class="b">{{kingdoms.n|int}}</b><span>kingdoms I can name, from Gododdin to Sussex. Not one has a border we can draw</span></div>
+</div>
+
+<p class="lede">There is a famous kind of map that shows Britain around AD 500 as a patchwork of kingdoms: Rheged and Elmet, Gwynedd and Dumnonia, Bernicia, Kent and the East Angles, each in its own colour with a neat edge. I like those maps. They are beautiful, and they make a lost world feel real. But almost nothing written in Britain survives from the century after Rome, and most of those kingdom names first appear in books written two, three or seven hundred years later.</p>
+<p>So I tried to build a different map: one that starts from the ground. It plots what archaeology and the national records can actually place in the years around 500, from hillforts that people went back to, to cemeteries, inscribed memorial stones and early churches. Then it lays the named kingdoms on top, not as countries with borders but as faint, labelled zones, each with a note on where and when its name is first written down.</p>
+<p>The result is patchy, and I will say where. But some patterns are so strong that even thin, uneven data shows them.</p>
+
+<h2><span class="n">01 · The map</span>What can be placed around AD 500</h2>
+<p>Each dot is one piece of evidence; tap it for what is known and where the record comes from. Filled dots have their own dating evidence. Hollow dots are dated only by type, for example "ogham stones were mostly cut in the 5th and 6th centuries", so treat their dates as broad. The coloured haze is a smoothed density of the evidence for each cultural tradition. The italic names are kingdoms, placed by me at the area the sources point to: they are guides, not boundaries. Use <b>Map layers</b> for hills, modern place names and borders, Roman roads and low-lying land. Search a modern place to see what lay near it.</p>
+<div class="figure bleed">
+  <div class="chips" id="chips" role="group" aria-label="Evidence layers"></div>
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Overlays">
+      <button class="btn" id="vDens" aria-pressed="true">Culture haze</button>
+      <button class="btn" id="vKing" aria-pressed="true">Kingdoms</button>
+      <button class="btn" id="vCiv" aria-pressed="false">Roman peoples</button>
+    </div>
+    <div class="searchbox">
+      <input type="search" id="q" placeholder="Search a modern place, e.g. Shrewsbury" aria-label="Search a modern place" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="sug">
+      <ul class="suggest" id="sug" role="listbox"></ul>
+    </div>
+  </div>
+  <div class="timebar">
+    <button class="btn" id="play" aria-label="Play through the years">▶ Play</button>
+    <button class="btn" id="all" aria-pressed="false">All dates</button>
+    <input type="range" id="year" min="400" max="700" step="10" value="500" aria-label="Year AD">
+    <div class="when" id="when"></div>
+  </div>
+  <div class="mapwrap"><div id="lmap" role="region" aria-label="Map of Britain and Ireland around AD 500 with layers of archaeological evidence and uncertain kingdom zones"></div></div>
+  <div class="legend" id="legend"></div>
+  <div class="near" id="near" aria-live="polite"></div>
+  <div class="src">Evidence: Atlas of Hillforts of Britain and Ireland (CC BY-SA 4.0), Wikidata (CC0), Ireland's Sites and Monuments Record (CC BY 4.0), Pleiades (CC BY 3.0), Wikipedia (CC BY-SA 4.0). Haze: Gaussian kernel density with a {{surfaces.sigma_km|int}} km kernel, each tradition scaled to its own peak, on land only. Kingdom zones: my approximate placement, sized only to show roughly where each name belongs. Click the map to let the scroll wheel zoom it.</div>
+</div>
+
+<h2><span class="n">02 · Two habits</span>An east of graves, a west of stones</h2>
+<p>Put the Anglo-Saxon cemeteries and settlements next to the Latin-inscribed memorial stones and the island splits in two. The {{eastwest.germanic_n|int}} Anglo-Saxon sites in my data have a median longitude of {{eastwest.germanic_median_lon|w2}} degrees west, almost on the Greenwich meridian; for the {{eastwest.brittonic_n|int}} inscribed stones and western high-status sites it is {{eastwest.brittonic_median_lon|w2}} degrees west, in the middle of Wales. {{eastwest.germanic_east_of_m2|pct}} of the Anglo-Saxon sites lie east of 2 degrees west, and {{eastwest.brittonic_west_of_m3|pct}} of the stones lie west of 3 degrees west. Just {{eastwest.brit_within_50km_of_ger|int}} of those western sites has an Anglo-Saxon site within 50 km. Smoothed into density surfaces, the two never overlap: there is no square kilometre where both rise above a tenth of their peak.</p>
+<div class="figure">
+  <div class="fig-h">Graves in the east, stones in the west</div>
+  <div class="fig-sub">Anglo-Saxon cemeteries and settlements (madder) and Latin-inscribed stones and western high-status sites (teal), Great Britain south of the Forth, counted in half-degree strips of longitude.</div>
+  <div class="chart" id="profile"></div>
+  <div class="src">Data: Wikidata items whose names or descriptions mark them as early Anglo-Saxon cemeteries, burials or settlements; Wikidata inscribed stones in Britain outside the Pictish north; the high-status sites in section 03. See <a href="#method">How I did this</a>.</div>
+</div>
+<p>This is a real pattern, and archaeologists have described it for a long time, but it is worth being clear about what it is. It is a map of two <i>habits</i>, not two peoples. In the east, people buried their dead with brooches, beads and weapons, or cremated them in urns, in the way that came across the North Sea in the 5th century. In the west, Christian Britons set up memorial stones carved with Latin names, often with Roman-style titles. Somebody living in Kent who never owned a brooch, or a family in Wales too poor for a stone, is invisible on this map. Even so, the gap in the middle is striking: a band from the Pennines to Dorset where neither habit shows in my data.</p>
+<div class="caveat"><b class="tag">Caveat</b>Wikidata's record of Anglo-Saxon cemeteries is thin: it holds {{layers.germanic|int}} that I could identify, far fewer than archaeologists know about, and they are mostly scheduled monuments in England whose official names happen to say "Anglo-Saxon". The western stones are better covered because Cadw's scheduled monument names say "inscribed stone". So treat the counts as samples and the contrast as the finding.</div>
+
+<h2><span class="n">03 · Back to the hills</span>The hillforts people went back to</h2>
+<p>Most hillforts were built in the Iron Age, centuries before Rome. The Atlas of Hillforts of Britain and Ireland, compiled by Gary Lock and Ian Ralston, records {{hill.atlas_total|int}} of them, with a field for every period in which there is dating evidence. Just {{hill.dated|int}} ({{hill.share|pct1}}) have evidence for use between AD 400 and 800. They are not spread evenly: {{hill.by_country.Scotland.dated|int}} are in Scotland, {{hill.by_country.England.dated|int}} in England, {{hill.by_country.Wales.dated|int}} in Wales and {{hill.by_country.Isle of Man.dated|int}} on the Isle of Man, where that is {{hill.by_country.Isle of Man.share|pct}} of the island's {{hill.by_country.Isle of Man.n|int}} hillforts.</p>
+<div class="figure">
+  <div class="fig-h">Share of hillforts with dating evidence for AD 400 to 800</div>
+  <div class="fig-sub">By country, Atlas of Hillforts of Britain and Ireland. Bar length: share; label: number dated and total.</div>
+  <div class="chart" id="hillc"></div>
+</div>
+<p>The ones that were reused look different from the average hillfort. {{hill.coastal_share|pct}} are on the coast, against {{hill.coastal_all_share|pct}} of all hillforts, about {{hill.coastal_ratio|x1}} times the rate; {{hill.promontory_share|pct}} are promontory forts, against {{hill.promontory_all_share|pct}}. That fits what excavation has found at the famous sites: these were small, defended seats of chiefs and kings on headlands and crags by the sea, the places where wine and fine pottery from the Mediterranean and Gaul came ashore.</p>
+<p>The dating is uneven. The Atlas rates its own confidence: for {{hill.reliable_ab|int}} of the {{hill.dated|int}} the evidence is rated high or medium, and for {{hill.no_reliability|int}} it is rated as none, meaning the early medieval date rests on something like a place-name or a stray find. {{hill.radiocarbon|int}} of the dating notes mention radiocarbon dates.</p>
+<div class="cards" id="cards"></div>
+
+<h2><span class="n">04 · Across the Irish Sea</span>Ogham, Dyfed and the western sea</h2>
+<p>Ogham is an alphabet of strokes and notches cut along the edge of a stone, used mainly to write the early Irish language. My map has {{ogham.spots|int}} ogham find-spots, merged from {{ogham.records|int}} records in Wikidata and Ireland's Sites and Monuments Record, and {{ogham.ireland_share|pct}} of them are in Ireland. Wikipedia's article on ogham says the stones flourished in the 5th and 6th centuries around the Irish Sea, and that the largest number outside Ireland is in Pembrokeshire.</p>
+<p>That second point is where my data falls short, and honestly so. In Wikidata most Welsh stones are recorded only as "inscribed stones", whether or not they also carry ogham, so the ogham layer shows just {{ogham.by_nation.Wales|int}} in Wales. What the map can show is the stones themselves: {{latin.wales_share|pct}} of the {{latin.n|int}} inscribed stones are in Wales, and {{latin.dyfed|int}} of them ({{latin.dyfed_share|pct}}) are in the old county of Dyfed in the south-west. The written sources point the same way. Wikipedia's article on the kingdom of Dyfed says its royal line was founded by Irish settlers in the 5th century. A memorial stone from Castell Dwyran, of about 550, names a king in Latin and in ogham and gives him the late Roman title of protector. He is often identified with Vortipor, the king of the Demetae whom Gildas attacks by name, although the spellings differ and some scholars doubt it.</p>
+<p class="pull">One stone, two alphabets, and perhaps a king who appears in Gildas: that is about as close as AD 500 comes to a named person on the ground.</p>
+<p>The traffic went north too. Dál Riata, in Argyll, was a Gaelic kingdom that spanned the sea to Antrim, and its chief seat is thought to have been the crag of Dunadd, with its carved footprint for king-making. In Brycheiniog, the Brecon kingdom, tradition has an Irish-descended founder called Brychan, and Wikipedia's article says it was probably founded by Irish raiders in the late 5th century.</p>
+
+<h2><span class="n">05 · Names without borders</span>The kingdoms</h2>
+<p>Here are the {{kingdoms.n|int}} kingdoms on the map: {{kingdoms.n_brittonic|int}} British, {{kingdoms.n_germanic|int}} Anglo-Saxon, one Gaelic and one Pictish. For each I give the earliest written mention as Wikipedia's article describes it, and what evidence lies in the zone I drew. Some zones are full of evidence and some are empty. An empty zone does not mean an empty kingdom: Elmet and Ergyng, for example, are known from texts and place-names, and their people left little that my layers can see.</p>
+<div class="figure">
+  <div class="fig-h">Kingdoms and their first written mentions</div>
+  <div class="fig-sub">Evidence counts within each zone's radius (approximate). Click a name to find it on the map.</div>
+  <div class="tablewrap"><table class="t" id="ktab"></table></div>
+</div>
+<p>Look at the right-hand column and a pattern appears: for the southern and eastern Anglo-Saxon kingdoms, almost all the culturally distinctive evidence in the zone is Anglo-Saxon, and for Wales almost all of it is British. In the north it is thinner. Gododdin's zone, around Edinburgh and Traprain Law, catches Pictish stones from across the Forth and hillforts with no cultural label, and nothing that says Gododdin. That is what most of this period looks like when you try to pin names to the ground.</p>
+
+<h2><span class="n">06 · What Rome left</span>Towns, forts and the new settlers</h2>
+<p>Under the early medieval layers sits the Roman province. Pleiades, the gazetteer of the ancient world, places {{roman.towns|int}} Roman towns and settlements and {{roman.forts|int}} forts in my frame with good locations. It tags {{roman.late_town_share|pct}} of the towns and {{roman.late_fort_share|pct}} of the forts with its Late Antique period (AD 300 to 640). Most of that reflects the 4th century, not proof that anyone lived in them in 500. A few have stronger stories: Wikipedia's article on Wroxeter says the Roman town may have served as an early post-Roman capital of Powys.</p>
+<p>The Anglo-Saxon sites in my data sit close to Roman towns. Their median distance to the nearest Roman town is {{roman.ger_town_med_km|f1}} km, against {{roman.random_town_med_km|f1}} km for random points in the same part of England, and {{roman.ger_within_10km_town|pct}} lie within 10 km of one, against {{roman.random_within_10km_town|pct}} of the random points. It is a modest difference, and it has an obvious dull explanation as well as an exciting one: Roman towns and early Anglo-Saxon farms both favoured the same good river-valley land.</p>
+
+<h2><span class="n">07 · Dark skies</span>The 530s and 540s</h2>
+<p>Two disasters hit the middle of the century. In 536 a volcanic eruption filled the northern sky with a veil of sulphate haze and summers turned cold for years. Then the plague of Justinian spread from Egypt in 541 around the Mediterranean, and burials at Edix Hill near Cambridge show that it reached Britain. Neither can be seen in my layers, because the dating of most of the evidence is far too broad. The chart below sets the few firm dates against the evidence that is "in play" at each date.</p>
+<div class="figure">
+  <div class="fig-h">AD 400 to 700: events, and the evidence in play</div>
+  <div class="fig-sub">Top: dated events from the written sources (legends marked). Bottom: how many mapped pieces of evidence are dated to each decade. Hatched: dated only by type.</div>
+  <div class="chart" id="tline"></div>
+</div>
+
+<h2><span class="n">08 · Why so thin?</span>Writing the 5th century</h2>
+<p>Almost everything we know by name about Britain in 500 comes from texts written long afterwards. The chart shows the gap. Gildas, a British monk, is the only writer close to the time, and even his book is dated anywhere from the late 5th century to the 540s. Bede finished his history in 731. The Historia Brittonum, which gives us Arthur's battles and the British kings of the north, is of the early 9th century. The Anglo-Saxon Chronicle survives in manuscripts compiled from the 9th to the 12th centuries. The poem Y Gododdin survives in one manuscript of the later 13th century.</p>
+<div class="figure">
+  <div class="fig-h">When the main sources were written</div>
+  <div class="fig-sub">Each bar runs from the date usually given for the text's composition to its earliest surviving copy where Wikipedia gives one. The shaded band is AD 450 to 550.</div>
+  <div class="chart" id="sources"></div>
+</div>
+<p>That is why every kingdom on my map is drawn in italics with a soft edge. The names are real: they mattered to the people who wrote them down. But they reach us through later politics, genealogies built to flatter later kings, and stories that grew in the telling. The ground, by contrast, is mute but contemporary.</p>
+
+<div class="note" id="method">
+  <h3>How I did this</h3>
+  <p><b>Hillforts.</b> The Atlas of Hillforts of Britain and Ireland (Lock and Ralston 2017), downloaded from its ArcGIS service on 28 October 2026: {{hill.atlas_total|int}} records. A hillfort is in my layer if the Atlas marks dating evidence for AD 400 to 800; the popup quotes the Atlas's own dating note and its reliability rating.</p>
+  <p><b>Wikidata.</b> I downloaded every item in the United Kingdom, Ireland and the Isle of Man whose type matches a long list of site kinds (cemeteries, barrows, inscribed stones, ogham stones, Pictish stones, churches, monasteries, forts and more), {{coverage.wd_items_frame|int}} items with coordinates in my frame, and filtered them hard. Anglo-Saxon sites: names or descriptions that say Anglo-Saxon, Anglian or early Saxon cemetery, burial or settlement, excluding later ("middle Saxon", "late Saxon", burhs, churches and crosses). Inscribed stones: Britain only, excluding cross-carved slabs, Pictish and Roman stones. Pictish stones: Scotland. Churches and monasteries: a start date between 400 and 700 in Wikidata, read as a century where Wikidata stores one, plus Irish sites named "early medieval ecclesiastical site". Ogham: Wikidata ogham stones and sites, plus the ogham stones in Ireland's Sites and Monuments Record at their original locations, merged into find-spots where records lie within 300 m of each other.</p>
+  <p><b>High-status sites and dykes.</b> A short hand-made list, each entry tied to a sentence in the Wikipedia article that I checked against the downloaded text, with coordinates from the article or Wikidata (Wansdyke: Tan Hill, Wiltshire, from OS Open Names).</p>
+  <p><b>Dates.</b> {{site_dated_total|int}} pieces of evidence have a date range of their own (the Atlas's AD 400 to 800 band, Wikidata start dates, or a date in the Wikipedia text). The other {{type_dated_total|int}} carry a typical range for their kind: Anglo-Saxon cemeteries 450 to 650, ogham stones 400 to 600, Latin stones 400 to 700, Pictish stones 500 to 850. The slider shows what overlaps each year.</p>
+  <p><b>Haze.</b> For each tradition I counted the evidence on a web-mercator grid of about 1.5 km and smoothed it with a Gaussian kernel of {{surfaces.sigma_km|int}} km, then scaled it to its own 99th percentile. Germanic: Anglo-Saxon sites and the Anglian high-status sites. Brittonic: Latin stones and British high-status sites. Irish: ogham and Dunadd. Pictish: Pictish stones. Hillforts, churches and Roman sites are not given a culture. The haze shows where evidence is dense in my data, not where people lived.</p>
+  <p><b>Kingdoms.</b> I placed each name at the area its Wikipedia article points to (a capital, a Roman town or a region) and drew a soft circle whose size is only a guide. The table's "first written mention" summarises the article, and each key phrase was checked against the downloaded text. Ireland's many kingdoms are not labelled.</p>
+  <p><b>Low-lying land.</b> Land under 5 m above sea level today, from AWS Terrain Tiles, as a rough guide to where fen and marsh lay ({{coverage.lowland_km2|int}} km²). Coasts and drainage have changed since 500, so this is a sketch.</p>
+  <p><b>Known problems.</b> Wikidata coverage differs by country and by heritage agency: Wales's scheduled stones are well named, England's Anglo-Saxon cemeteries poorly; Ireland's Sites and Monuments Record covers the Republic only; Pictish stones number about {{pictish.wikipedia_survive|int}} according to Wikipedia, and my layer has {{pictish.n|int}}. Many "inscribed stones" have been moved into churches and museums. The search uses OS Open Names for Great Britain and GeoNames for Ireland, Northern Ireland and the Isle of Man.</p>
+</div>
+<div class="cta">
+  <a class="p" href="https://github.com/Tristan-Hotham/britain-500">Data and code</a>
+  <a href="https://doi.org/10.5281/zenodo.23735820">Paper (Zenodo)</a>
+  <a href="https://hillforts.arch.ox.ac.uk">Atlas of Hillforts</a>
+  <a href="https://tristan-hotham.github.io/within-sight/">Within sight: hillfort views</a>
+  <a href="https://blog.tristanhotham.com/">Blog</a>
+</div>
+<footer>
+  <p>Dr Tristan Hotham, Independent researcher. ORCID 0000-0003-4931-9349. Cite as: Hotham, T. (2026) Britain in AD 500: what the ground tells us. https://doi.org/10.5281/zenodo.23735820</p>
+  <p>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</p>
+  <p>Hillforts: Lock, G. and Ralston, I. (2017) Atlas of Hillforts of Britain and Ireland, https://hillforts.arch.ox.ac.uk, CC BY-SA 4.0. Sites: Wikidata (CC0). Ogham stones in the Republic of Ireland: National Monuments Service, Sites and Monuments Record (CC BY 4.0). Roman places: Pleiades (CC BY 3.0). Texts and coordinates of named sites: English Wikipedia (CC BY-SA 4.0). Roman roads: Itiner-e (de Soto and others 2025, CC BY 4.0). Elevation: AWS Terrain Tiles (Mapzen/Tilezen). Coast: Natural Earth (public domain). Borders: Office for National Statistics (OGL v3) and Natural Earth. Place names: OS Open Names, contains OS data © Crown copyright and database right 2026 (OGL v3); GeoNames (CC BY 4.0). Optional base maps: Tiles © Esri.</p>
+  <p>The derived data and the text of this page are released under CC BY-SA 4.0 (because they build on the Atlas of Hillforts and Wikipedia); the code under the MIT licence. Related: <a href="https://tristan-hotham.github.io/within-sight/">Within sight</a> · <a href="https://blog.tristanhotham.com/">all posts</a>.</p>
+</footer>
+</div>
+<div class="tip" id="tip"></div>
+<button class="btn theme" id="theme" aria-label="Toggle dark mode">◐</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+"use strict";
+const SITE = /*SITE*/;
+const R = /*RESULTS*/;
+const NS = "http://www.w3.org/2000/svg";
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fmt = n => Math.round(n).toLocaleString("en-GB");
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const isDark = () => document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+function el(t, a, p) { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; }
+function txt(p, x, y, s, cls, anchor) { const t = el("text", { x, y, class: "lab " + (cls || ""), "text-anchor": anchor || "start" }, p); t.textContent = s; return t; }
+const tip = $("tip");
+function showTip(h, x, y) { tip.innerHTML = h; tip.style.display = "block"; const w = tip.offsetWidth; x = Math.max(w / 2 + 8, Math.min(innerWidth - w / 2 - 8, x)); tip.style.left = x + scrollX + "px"; tip.style.top = y + scrollY + "px"; }
+function hideTip() { tip.style.display = "none"; }
+function hover(node, h) { node.style.cursor = "pointer"; node.setAttribute("tabindex", "0"); const s = () => { const r = node.getBoundingClientRect(); showTip(h, r.left + r.width / 2, r.top); }; node.addEventListener("pointerenter", s); node.addEventListener("pointerleave", hideTip); node.addEventListener("focus", s); node.addEventListener("blur", hideTip); }
+const redraws = [];
+function resp(box, render) { let last = 0; const go = force => { const w = Math.max(280, Math.round(box.clientWidth)); if (!force && Math.abs(w - last) < 4) return; last = w; box.innerHTML = ""; render(w, w < 560); }; new ResizeObserver(() => go()).observe(box); go(); redraws.push(() => go(true)); }
+function km(a, b, c, d) { const p = Math.PI / 180, x = .5 - Math.cos((c - a) * p) / 2 + Math.cos(a * p) * Math.cos(c * p) * (1 - Math.cos((d - b) * p)) / 2; return 12742 * Math.asin(Math.sqrt(x)); }
+
+/* ===== layers of evidence ===== */
+const LAY = [
+  { k: "hillfort", name: "Hillforts reused", c: "--hf", r: 5.5, on: true, d: "Hillfort with dating evidence for AD 400 to 800 (Atlas of Hillforts)" },
+  { k: "germanic", name: "Anglo-Saxon graves and settlements", c: "--ger", r: 4.5, on: true, d: "Early Anglo-Saxon cemetery, burial or settlement" },
+  { k: "latin", name: "Latin inscribed stones", c: "--bri", r: 4.5, on: true, d: "Early medieval inscribed stone (Latin, some also ogham)" },
+  { k: "ogham", name: "Ogham stones", c: "--iri", r: 3.8, on: true, d: "Ogham stone find-spot" },
+  { k: "pictish", name: "Pictish stones", c: "--pic", r: 4.5, on: true, d: "Pictish symbol stone or cross slab" },
+  { k: "christian", name: "Early churches and monasteries", c: "--chr", r: 4.5, on: true, d: "Church or monastery founded by AD 700, or early ecclesiastical site" },
+  { k: "royal", name: "Royal and high-status sites", c: "--roy", r: 8, on: true, d: "High-status site named in the stories" },
+  { k: "dyke", name: "Dykes", c: "--dyk", r: 6, on: true, d: "Linear earthwork (dyke) of the period" },
+  { k: "roman", name: "Roman towns and forts", c: "--rom", r: 3.2, on: false, d: "Roman town or fort (Pleiades)" },
+  { k: "other", name: "Other early medieval sites", c: "--oth", r: 4, on: true, d: "Other site named as early medieval" }
+];
+const CULT = { germanic: ["Anglo-Saxon (Germanic)", "--ger"], brittonic: ["British (Brittonic)", "--bri"], irish: ["Irish (Gaelic)", "--iri"], pictish: ["Pictish", "--pic"] };
+let ON = {}; LAY.forEach(l => ON[l.k] = l.on);
+try { Object.assign(ON, JSON.parse(localStorage.getItem("b500_on") || "{}")); } catch (e) {}
+const saveOn = () => { try { localStorage.setItem("b500_on", JSON.stringify(ON)); } catch (e) {} };
+const P = SITE.pts.map(p => ({ L: LAY[p[0]].k, name: p[1], lat: p[2], lon: p[3], d0: p[4], d1: p[5], site: p[6], nat: p[7], note: p[8], src: p[9], url: p[10], x: p[11] }));
+const countBy = {}; P.forEach(p => countBy[p.L] = (countBy[p.L] || 0) + 1);
+const S = { year: 500, all: false, dens: true, king: true, civ: false };
+
+/* hero mark: four soft overlapping zones and a dot */
+(function () { const g = $("heroMark"); [["--ger", 98, 92], ["--bri", 50, 88], ["--iri", 34, 52], ["--pic", 78, 40]].forEach(([c, x, y]) => el("circle", { cx: x, cy: y, r: 36, fill: css(c), "fill-opacity": .32 }, g)); el("circle", { cx: 70, cy: 70, r: 7, fill: css("--hf"), stroke: css("--fg"), "stroke-width": 2 }, g); })();
+
+/* ===== the map ===== */
+let lmap = null, ptsL = null, zoneL = null, kLabL = null, civL = null, roadL = null, landL = null, coastL = null, borderL = null, hillL = null, lowL = null, nameL = null, densL = [], pin = null, base = null;
+const B = [[49.8, -11.0], [61.0, 2.1]];
+const LY = { base: "own", hills: true, hillK: 60, names: true, nameLvl: 1, borders: true, borderK: 55, roads: true, low: false, colour: 70 };
+const LYDEF = { ...LY };
+try { Object.assign(LY, JSON.parse(localStorage.getItem("b500_layers") || "{}")); } catch (e) {}
+const saveLY = () => { try { localStorage.setItem("b500_layers", JSON.stringify(LY)); } catch (e) {} };
+const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/";
+let PLACES = null;
+function initMap() {
+  if (!window.L) { $("lmap").innerHTML = '<p style="padding:16px">The map library did not load.</p>'; return; }
+  lmap = L.map("lmap", { preferCanvas: true, zoomSnap: .25, zoomDelta: .5, minZoom: 4.5, maxZoom: 12, scrollWheelZoom: false, maxBounds: L.latLngBounds(B).pad(.25) });
+  lmap.fitBounds([[49.95, -10.4], [58.7, 1.8]], { paddingTopLeft: [4, 4], paddingBottomRight: [4, innerWidth < 600 ? 60 : 34] });
+  lmap.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
+  const pane = (n, z) => { lmap.createPane(n).style.zIndex = z; lmap.getPane(n).style.pointerEvents = "none"; };
+  pane("land", 210); pane("low", 230); pane("hills", 240); pane("dens", 300); pane("lines", 330); pane("zones", 350); pane("names", 640);
+  lmap.createPane("klab").style.zIndex = 650;
+  fetch("data/land.json").then(r => r.json()).then(gj => {
+    landL = L.geoJSON({ type: "GeometryCollection", geometries: gj }, { pane: "land", interactive: false, style: () => ({ stroke: false, fillColor: css("--land"), fillOpacity: 1 }) });
+    coastL = L.geoJSON({ type: "GeometryCollection", geometries: gj }, { pane: "lines", interactive: false, style: () => ({ color: css("--coast"), weight: .8, fill: false, opacity: .9 }) });
+    applyLayers();
+  });
+  fetch("data/borders.json").then(r => r.json()).then(gj => { borderL = L.geoJSON({ type: "GeometryCollection", geometries: gj }, { pane: "lines", interactive: false, style: () => ({ color: css("--fg"), weight: 1.1, dashArray: "4 4", fill: false }) }); applyLayers(); });
+  fetch("data/roads.json").then(r => r.json()).then(gj => { roadL = L.geoJSON({ type: "GeometryCollection", geometries: gj }, { pane: "lines", interactive: false, style: () => ({ color: css("--rom"), weight: 1.1, opacity: .55, fill: false }) }); applyLayers(); });
+  hillL = L.imageOverlay("data/hills.png", B, { pane: "hills", interactive: false });
+  lowL = L.imageOverlay("data/lowland.png", B, { pane: "low", interactive: false, opacity: .35 });
+  densL = ["germanic", "brittonic", "irish", "pictish"].map(c => L.imageOverlay(`data/dens_${c}.png`, B, { pane: "dens", interactive: false, className: "dens" }));
+  nameL = L.layerGroup();
+  ptsL = L.layerGroup().addTo(lmap); zoneL = L.layerGroup(); kLabL = L.layerGroup(); civL = L.layerGroup();
+  buildZones(); buildCiv(); drawPts();
+  initLayerPanel();
+  lmap.on("click", () => lmap.scrollWheelZoom.enable());
+  lmap.on("zoomend moveend", () => { kLabels(); placeNames(); });
+  lmap.attributionControl.addAttribution("Atlas of Hillforts (CC BY-SA 4.0) | Wikidata | Ireland SMR | Pleiades | Itiner-e | AWS Terrain Tiles | Natural Earth | OS Open Names, GeoNames");
+  fetch("data/places.json").then(r => r.json()).then(p => { PLACES = p; placeNames(); });
+}
+function setBase() {
+  if (base) { lmap.removeLayer(base); base = null; }
+  const t = isDark() ? "Dark" : "Light";
+  if (LY.base !== "own") {
+    const url = LY.base === "relief" ? ESRI + "World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}" : LY.base === "sat" ? ESRI + "World_Imagery/MapServer/tile/{z}/{y}/{x}" : `${ESRI}Canvas/World_${t}_Gray_Base/MapServer/tile/{z}/{y}/{x}`;
+    base = L.tileLayer(url, { maxZoom: 16, maxNativeZoom: LY.base === "relief" ? 13 : 16, attribution: "Tiles &copy; Esri" }).addTo(lmap);
+    base.getContainer && base.on("add", () => {});
+  }
+}
+function applyLayers() {
+  if (!lmap) return;
+  setBase();
+  const own = LY.base === "own";
+  if (landL) { if (own) landL.addTo(lmap); else landL.remove(); landL.setStyle({ fillColor: css("--land") }); }
+  if (coastL) { coastL.addTo(lmap); coastL.setStyle({ color: css("--coast"), opacity: own ? .9 : .5 }); }
+  if (LY.hills) { hillL.addTo(lmap); hillL.setOpacity(Math.min(1, .2 + LY.hillK / 100)); } else hillL.remove();
+  if (LY.low) lowL.addTo(lmap); else lowL.remove();
+  if (borderL) { if (LY.borders) { borderL.addTo(lmap); borderL.setStyle({ color: css("--fg"), opacity: .15 + LY.borderK / 100 * .7 }); } else borderL.remove(); }
+  if (roadL) { if (LY.roads) { roadL.addTo(lmap); roadL.setStyle({ color: css("--rom") }); } else roadL.remove(); }
+  densL.forEach(d => { if (S.dens) { d.addTo(lmap); d.setOpacity(LY.colour / 100); } else d.remove(); });
+  if (S.king) { zoneL.addTo(lmap); kLabL.addTo(lmap); } else { zoneL.remove(); kLabL.remove(); }
+  if (S.civ) civL.addTo(lmap); else civL.remove();
+  if (LY.names) nameL.addTo(lmap); else nameL.remove();
+  kLabels(); placeNames();
+}
+function initLayerPanel() {
+  const Ctl = L.Control.extend({ options: { position: "topright" }, onAdd() {
+    const d = L.DomUtil.create("div"); L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d);
+    d.innerHTML = `<button class="lyrBtn" aria-expanded="false" aria-controls="lyrPanel">Map layers</button>
+<div class="lyrPanel" id="lyrPanel" hidden>
+ <div class="row"><label for="lyBase" style="font-weight:600">Base map</label><div class="sub" style="margin-left:0"><select id="lyBase" aria-label="Base map"><option value="own">Vellum (works offline)</option><option value="grey">Plain grey (Esri)</option><option value="relief">Shaded relief (Esri)</option><option value="sat">Satellite (Esri)</option></select></div></div>
+ <div class="row"><label><input type="checkbox" id="lyHills"> Hills</label><div class="sub"><span>strength</span><input type="range" id="lyHillK" min="10" max="100" step="5" aria-label="Hill shading strength"></div></div>
+ <div class="row"><label><input type="checkbox" id="lyNames"> Modern place names</label><div class="sub"><span>how many</span><select id="lyNameLvl" aria-label="How many place names"><option value="0">Cities only</option><option value="1">Cities and towns</option><option value="2">Down to villages</option></select></div></div>
+ <div class="row"><label><input type="checkbox" id="lyBorders"> Modern borders</label><div class="sub"><span>strength</span><input type="range" id="lyBorderK" min="10" max="100" step="5" aria-label="Border line strength"></div></div>
+ <div class="row"><label><input type="checkbox" id="lyRoads"> Roman roads</label></div>
+ <div class="row"><label><input type="checkbox" id="lyLow"> Low-lying land (fen and marsh)</label></div>
+ <div class="row"><label style="font-weight:600">Haze colour</label><div class="sub"><span>strength</span><input type="range" id="lyColour" min="20" max="100" step="5" aria-label="Culture haze strength"></div></div>
+ <button class="reset" id="lyReset">Reset layers</button>
+</div>`;
+    return d; } });
+  lmap.addControl(new Ctl());
+  const q = $, btn = lmap.getContainer().querySelector(".lyrBtn"), pan = q("lyrPanel");
+  btn.onclick = () => { const o = pan.hidden; pan.hidden = !o; btn.setAttribute("aria-expanded", o); };
+  const sync = () => { q("lyBase").value = LY.base; q("lyHills").checked = LY.hills; q("lyHillK").value = LY.hillK; q("lyNames").checked = LY.names; q("lyNameLvl").value = LY.nameLvl; q("lyBorders").checked = LY.borders; q("lyBorderK").value = LY.borderK; q("lyRoads").checked = LY.roads; q("lyLow").checked = LY.low; q("lyColour").value = LY.colour; };
+  const on = (id, ev, f) => q(id).addEventListener(ev, e => { f(e.target); saveLY(); applyLayers(); });
+  on("lyBase", "change", t => LY.base = t.value);
+  on("lyHills", "change", t => LY.hills = t.checked); on("lyHillK", "input", t => { LY.hillK = +t.value; LY.hills = q("lyHills").checked = true; });
+  on("lyNames", "change", t => LY.names = t.checked); on("lyNameLvl", "change", t => { LY.nameLvl = +t.value; LY.names = q("lyNames").checked = true; });
+  on("lyBorders", "change", t => LY.borders = t.checked); on("lyBorderK", "input", t => { LY.borderK = +t.value; LY.borders = q("lyBorders").checked = true; });
+  on("lyRoads", "change", t => LY.roads = t.checked); on("lyLow", "change", t => LY.low = t.checked);
+  on("lyColour", "input", t => { LY.colour = +t.value; if (!S.dens) { S.dens = true; $("vDens").setAttribute("aria-pressed", "true"); } });
+  q("lyReset").onclick = () => { Object.assign(LY, LYDEF); saveLY(); sync(); applyLayers(); };
+  sync(); applyLayers();
+}
+const MAJOR = new Set(["London", "Birmingham", "Manchester", "Glasgow", "Edinburgh", "Cardiff", "Belfast", "Dublin", "Cork", "Leeds", "Liverpool", "Bristol", "Newcastle upon Tyne"]);
+function placeNames() {
+  if (!lmap || !nameL) return;
+  nameL.clearLayers(); if (!LY.names || !PLACES) return;
+  const z = lmap.getZoom(), bb = lmap.getBounds().pad(.05), lvl = LY.nameLvl;
+  const minR = lvl === 0 ? (z >= 7.5 ? 3 : 4) : lvl === 1 ? (z >= 8.5 ? 2 : z >= 6.5 ? 3 : 4) : (z >= 9.5 ? 1 : z >= 8 ? 2 : z >= 6.5 ? 3 : 4);
+  const cand = [];
+  for (const p of PLACES) { const r = MAJOR.has(p[0]) && p[4] >= 2 ? 4 : p[4]; if (r >= minR && r > 0 && bb.contains([p[2], p[3]])) cand.push({ nm: p[0], lat: p[2], lon: p[3], r }); }
+  cand.sort((a, b) => b.r - a.r);
+  const boxes = S.king ? KB.slice() : []; let n = 0;
+  for (const c of cand) {
+    const pt = lmap.latLngToContainerPoint([c.lat, c.lon]), fs = c.r >= 2 ? 11 : 10;
+    const bx = [pt.x - 4, pt.y - 8, pt.x + 10 + c.nm.length * fs * .62, pt.y + 7];
+    if (boxes.some(o => bx[0] < o[2] && bx[2] > o[0] && bx[1] < o[3] && bx[3] > o[1])) continue;
+    boxes.push(bx);
+    L.marker([c.lat, c.lon], { pane: "names", interactive: false, keyboard: false, icon: L.divIcon({ className: "city" + (c.r <= 1 ? " r1" : ""), html: `<i></i>${esc(c.nm)}`, iconSize: null, iconAnchor: [3, 6] }) }).addTo(nameL);
+    if (++n >= 260) break;
+  }
+}
+const LAYNAME = Object.fromEntries(LAY.map(l => [l.k, l]));
+function dateTxt(p) {
+  if (p.L === "roman") return "Roman period" + (p.x % 2 ? "; Pleiades also records it in the Late Antique period, AD 300 to 640" : "");
+  const r = p.d0 === p.d1 ? `AD ${p.d0}` : `AD ${p.d0} to ${p.d1}`;
+  return p.site ? r + " (own dating evidence)" : r + " (typical range for this kind of site)";
+}
+function popHTML(p) {
+  const l = LAYNAME[p.L];
+  const extra = p.L === "ogham" && p.x > 1 ? `<div class="pn">${p.x} records merged at this find-spot (several databases list the same stones).</div>` : "";
+  return `<div class="pop"><b class="t">${esc(p.name)}</b><div class="c">${esc(l.d)}${p.nat ? " · " + esc(p.nat) : ""}</div><div>${esc(dateTxt(p))}</div>${p.note ? `<div class="pn">${esc(p.note)}</div>` : ""}${extra}<div class="pn">Source: ${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.src)}</a>` : esc(p.src)}</div></div>`;
+}
+const markers = [];
+function drawPts() {
+  ptsL.clearLayers(); markers.length = 0;
+  const order = ["roman", "other", "ogham", "latin", "pictish", "germanic", "christian", "hillfort", "dyke", "royal"];
+  for (const k of order) {
+    const l = LAYNAME[k], col = css(l.c);
+    for (const p of P) {
+      if (p.L !== k) continue;
+      const hollow = !p.site && k !== "roman";
+      const romanFort = k === "roman" && p.x >= 2;
+      const m = L.circleMarker([p.lat, p.lon], { radius: l.r, color: k === "royal" ? css("--fg") : col, weight: k === "royal" ? 2 : hollow ? 1.6 : 1, fillColor: col, fillOpacity: hollow ? .18 : k === "roman" ? (romanFort ? .25 : .7) : .85, opacity: k === "roman" ? .8 : 1 });
+      m.bindPopup(() => popHTML(p), { maxWidth: 300 });
+      m._p = p; markers.push(m);
+    }
+  }
+  filterPts();
+}
+function visible(p) {
+  if (!ON[p.L]) return false;
+  if (S.all || p.L === "roman") return true;
+  return p.d0 <= S.year && S.year <= p.d1;
+}
+function filterPts() {
+  if (!ptsL) return;
+  let n = 0;
+  for (const m of markers) { const v = visible(m._p); if (v) { if (!ptsL.hasLayer(m)) ptsL.addLayer(m); if (m._p.L !== "roman") n++; } else if (ptsL.hasLayer(m)) ptsL.removeLayer(m); }
+  const firm = markers.filter(m => m._p.L !== "roman" && m._p.site && visible(m._p)).length;
+  $("when").innerHTML = S.all ? `All dates<small>${fmt(n)} pieces of evidence shown</small>` : `AD ${S.year}<small>${fmt(n)} shown, ${fmt(firm)} with their own dates</small>`;
+  kLabL && kLabL.eachLayer(m => m._k && m.setOpacity(1));
+}
+function chips() {
+  const box = $("chips");
+  box.innerHTML = LAY.map(l => `<button class="chip" data-k="${l.k}" aria-pressed="${ON[l.k]}"><i style="background:var(${l.c})"></i>${esc(l.name)} <b>${fmt(countBy[l.k] || 0)}</b></button>`).join("");
+  box.querySelectorAll(".chip").forEach(b => b.onclick = () => { const k = b.dataset.k; ON[k] = !ON[k]; b.setAttribute("aria-pressed", ON[k]); saveOn(); filterPts(); });
+}
+function legend() {
+  const c = Object.entries(CULT).map(([k, [n, v]]) => `<span><i class="zone" style="background:var(${v})"></i>${n} haze and kingdom names</span>`).join("");
+  $("legend").innerHTML = `<span><i style="background:var(--fg)"></i>Filled: own dating</span><span><i class="hol"></i>Hollow: dated by type</span>${c}<span><i style="background:var(--rom);opacity:.6"></i>Roman town (solid) or fort (pale)</span>`;
+}
+const KC = { brittonic: "--bri", germanic: "--ger", irish: "--iri", pictish: "--pic" };
+const KN = { brittonic: "British (Brittonic)", germanic: "Anglo-Saxon", irish: "Gaelic", pictish: "Pictish" };
+function kingPop(k) {
+  const z = SITE.kz[k[0]] || [0, 0, 0, 0, 0, 0];
+  return `<div class="pop"><b class="t">${esc(k[0])}</b><span class="unc">Approximate · uncertain</span><div class="c">${KN[k[1]]} kingdom, placed at ${esc(k[5])}</div><div><b>First written:</b> ${esc(k[6])}</div><div class="pn">Within about ${k[4]} km of the label: ${z[0]} pieces of evidence (${z[1]} Anglo-Saxon, ${z[2]} British, ${z[3]} Irish, ${z[4]} Pictish, ${z[5]} without a cultural label).</div><div class="pn"><a href="${esc(k[7])}" target="_blank" rel="noopener">Wikipedia article</a></div></div>`;
+}
+function buildZones() {
+  zoneL.clearLayers(); kLabL.clearLayers();
+  for (const k of SITE.kingdoms) {
+    const col = css(KC[k[1]]);
+    for (const [f, o] of [[1, .035], [.85, .035], [.7, .035], [.55, .035], [.4, .035], [.25, .035]]) L.circle([k[2], k[3]], { pane: "zones", radius: k[4] * 1000 * f, stroke: false, fillColor: col, fillOpacity: o, interactive: false }).addTo(zoneL);
+    const m = L.marker([k[2], k[3]], { pane: "klab", keyboard: true, icon: L.divIcon({ className: "kg" + (k[4] < 30 ? " s" : ""), html: `<span style="color:${col}">${esc(k[0].replace(/ \(.*\)/, ""))}<small>?</small></span>`, iconSize: null, iconAnchor: [k[0].replace(/ \(.*\)/, "").length * (k[4] < 30 ? 3.6 : 4.2), 8] }) });
+    m.bindPopup(() => kingPop(k), { maxWidth: 300 }); m._k = k; m.addTo(kLabL);
+  }
+  kLabels();
+}
+/* hide kingdom labels that would overlap a bigger zone's label at this zoom */
+let KB = [];
+function kLabels() {
+  KB = [];
+  if (!lmap || !kLabL) return;
+  const ms = []; kLabL.eachLayer(m => ms.push(m));
+  ms.sort((a, b) => b._k[4] - a._k[4]);
+  const boxes = [];
+  for (const m of ms) {
+    const pt = lmap.latLngToContainerPoint(m.getLatLng()), nm = m._k[0].replace(/ \(.*\)/, ""), w = nm.length * (m._k[4] < 30 ? 7.2 : 8.4) + 10;
+    const bx = [pt.x - w / 2, pt.y - 10, pt.x + w / 2, pt.y + 10];
+    const hit = boxes.some(o => bx[0] < o[2] && bx[2] > o[0] && bx[1] < o[3] && bx[3] > o[1]);
+    if (!hit) { boxes.push(bx); KB.push(bx); }
+    const e = m.getElement(); if (e) e.style.display = hit ? "none" : "";
+  }
+}
+function buildCiv() {
+  civL.clearLayers();
+  for (const c of SITE.civ) L.marker([c[2], c[3]], { pane: "names", interactive: false, icon: L.divIcon({ className: "civ", html: esc(c[0]), iconSize: null, iconAnchor: [c[0].length * 4, -6] }) }).addTo(civL);
+}
+
+/* ===== controls ===== */
+function setPressed(id, v) { $(id).setAttribute("aria-pressed", v); }
+$("vDens").onclick = () => { S.dens = !S.dens; setPressed("vDens", S.dens); applyLayers(); };
+$("vKing").onclick = () => { S.king = !S.king; setPressed("vKing", S.king); applyLayers(); };
+$("vCiv").onclick = () => { S.civ = !S.civ; setPressed("vCiv", S.civ); applyLayers(); };
+$("year").oninput = e => { S.year = +e.target.value; if (S.all) { S.all = false; setPressed("all", false); } filterPts(); };
+$("all").onclick = () => { S.all = !S.all; setPressed("all", S.all); filterPts(); };
+let playT = null;
+$("play").onclick = () => {
+  if (playT) { clearInterval(playT); playT = null; $("play").textContent = "▶ Play"; return; }
+  S.all = false; setPressed("all", false); if (S.year >= 700) S.year = 400;
+  $("play").textContent = "❚❚ Pause";
+  playT = setInterval(() => { S.year += 10; if (S.year > 700) { clearInterval(playT); playT = null; S.year = 700; $("play").textContent = "▶ Play"; } $("year").value = S.year; filterPts(); }, 600);
+};
+
+/* ===== search ===== */
+const qi = $("q"), sug = $("sug"); let sugItems = [], sugIdx = -1;
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+function showSug(items) { sugItems = items; sugIdx = -1; sug.innerHTML = items.map((p, k) => `<li role="option" data-k="${k}">${esc(p[0])} <span>${esc(p[1] || "")}</span></li>`).join(""); sug.style.display = items.length ? "block" : "none"; qi.setAttribute("aria-expanded", items.length > 0); }
+qi.addEventListener("input", () => {
+  const v = norm(qi.value.trim()); if (v.length < 2 || !PLACES) { showSug([]); return; }
+  const a = [], b = [];
+  for (const p of PLACES) { const n = norm(p[0]); if (n.startsWith(v)) a.push(p); else if (v.length > 3 && n.includes(v)) b.push(p); if (a.length > 40) break; }
+  a.sort((x, y) => y[4] - x[4] || x[0].length - y[0].length);
+  showSug(a.concat(b).slice(0, 12));
+});
+qi.addEventListener("keydown", e => {
+  if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); if (!sugItems.length) return; sugIdx = (sugIdx + (e.key === "ArrowDown" ? 1 : -1) + sugItems.length) % sugItems.length; sug.querySelectorAll("li").forEach((li, k) => li.setAttribute("aria-selected", k === sugIdx)); }
+  else if (e.key === "Enter") { e.preventDefault(); const p = sugItems[Math.max(0, sugIdx)]; if (p) pick(p); }
+  else if (e.key === "Escape") showSug([]);
+});
+sug.addEventListener("click", e => { const li = e.target.closest("li"); if (li) pick(sugItems[+li.dataset.k]); });
+document.addEventListener("click", e => { if (!e.target.closest(".searchbox")) showSug([]); });
+function pick(p) {
+  showSug([]); qi.value = p[0];
+  if (pin) pin.remove();
+  pin = L.circleMarker([p[2], p[3]], { radius: 8, color: css("--fg"), weight: 2.5, fillColor: css("--bg"), fillOpacity: 1 }).addTo(lmap);
+  lmap.setView([p[2], p[3]], 8.5);
+  near(p);
+}
+const ONE = { hillfort: "Reused hillfort", royal: "High-status site", germanic: "Anglo-Saxon site", latin: "Inscribed stone", ogham: "Ogham stone", pictish: "Pictish stone", christian: "Early church or monastery", roman: "Roman town or fort" };
+function near(p) {
+  const lat = p[2], lon = p[3], R25 = 25, R40 = 40;
+  const ds = P.map(q => ({ q, d: km(lat, lon, q.lat, q.lon) }));
+  const within = ds.filter(o => o.d <= R25);
+  const byL = {}; within.forEach(o => byL[o.q.L] = (byL[o.q.L] || 0) + 1);
+  const nearest = {};
+  for (const o of ds) { const k = o.q.L; if (!nearest[k] || o.d < nearest[k].d) nearest[k] = o; }
+  const show = ["hillfort", "royal", "germanic", "latin", "ogham", "pictish", "christian", "roman"];
+  const li = show.filter(k => nearest[k]).sort((a, b) => nearest[a].d - nearest[b].d).slice(0, 6).map(k => { const o = nearest[k]; return `<li>${esc(ONE[k])}: <b>${esc(o.q.name)}</b>, ${fmt(o.d)} km</li>`; }).join("");
+  // culture mix of the culture-tagged evidence within 40 km, weighted by a Gaussian kernel
+  const cw = { germanic: 0, brittonic: 0, irish: 0, pictish: 0 };
+  const CM = { germanic: "germanic", latin: "brittonic", ogham: "irish", pictish: "pictish" };
+  for (const o of ds) { const c = CM[o.q.L]; if (c && o.d <= R40 * 2) cw[c] += Math.exp(-(o.d * o.d) / (2 * 20 * 20)); }
+  const tot = Object.values(cw).reduce((a, b) => a + b, 0);
+  const mix = tot > .05 ? `<div class="mix">${Object.entries(cw).filter(([, v]) => v > 0).map(([c, v]) => `<span style="width:${100 * v / tot}%;background:var(${CULT[c][1]})" title="${CULT[c][0]}"></span>`).join("")}</div><div>${Object.entries(cw).filter(([, v]) => v / tot > .02).sort((a, b) => b[1] - a[1]).map(([c, v]) => `${CULT[c][0]} ${Math.round(100 * v / tot)}%`).join(" · ")}</div>` : "<div>No culturally distinctive evidence within about 40 km in my data.</div>";
+  const ks = SITE.kingdoms.map(k => ({ k, d: km(lat, lon, k[2], k[3]) })).sort((a, b) => a.d / a.k[4] - b.d / b.k[4]);
+  const inside = ks.filter(o => o.d <= o.k[4]);
+  const kt = inside.length ? `Inside the rough zone I drew for <b>${inside.map(o => esc(o.k[0])).join("</b> and <b>")}</b>. These zones are guesses at where a name belongs, not borders.` : `Outside all my kingdom zones. The nearest label is <b>${esc(ks[0].k[0])}</b>, ${fmt(ks[0].d)} km away.`;
+  const n25 = within.filter(o => o.q.L !== "roman").length;
+  $("near").style.display = "block";
+  $("near").innerHTML = `<h4>Around ${esc(p[0])} in AD 500</h4><div>${n25 ? `${fmt(n25)} ${n25 === 1 ? "piece" : "pieces"} of early medieval evidence within ${R25} km` : `No early medieval evidence within ${R25} km in my data`}${byL.roman ? `, and ${fmt(byL.roman)} Roman ${byL.roman === 1 ? "town or fort" : "towns or forts"}` : ""}.</div><ul>${li}</ul><div><b>Cultural mix nearby</b> (inscribed stones, ogham, Pictish stones and Anglo-Saxon sites, weighted by distance):</div>${mix}<p style="margin:8px 0 0">${kt}</p>`;
+}
+
+/* ===== charts ===== */
+function profileChart() {
+  const box = $("profile"), D = SITE.profile;
+  resp(box, (W, sm) => {
+    const H = sm ? 250 : 270, m = { l: 34, r: 8, t: 14, b: 44 };
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Counts of Anglo-Saxon sites and inscribed stones by longitude" }, box);
+    const max = Math.max(...D.map(d => Math.max(d.germanic, d.brittonic)));
+    const bw = (W - m.l - m.r) / D.length, y = v => H - m.b - v / max * (H - m.t - m.b);
+    for (let v = 0; v <= max; v += 10) { el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: css("--rule") }, svg); txt(svg, m.l - 6, y(v) + 4, v, "m s", "end"); }
+    D.forEach((d, i) => {
+      const x = m.l + i * bw;
+      const gb = el("rect", { x: x + bw * .1, y: y(d.germanic), width: bw * .38, height: H - m.b - y(d.germanic), fill: css("--ger") }, svg);
+      const bb = el("rect", { x: x + bw * .52, y: y(d.brittonic), width: bw * .38, height: H - m.b - y(d.brittonic), fill: css("--bri") }, svg);
+      const h = `<b>${Math.abs(d.lon_from)}° to ${Math.abs(d.lon_to)}° ${d.lon_to <= 0 ? "west" : d.lon_from >= 0 ? "east" : "either side of Greenwich"}</b><br>${d.germanic} Anglo-Saxon sites<br>${d.brittonic} inscribed stones and western sites`;
+      hover(gb, h); hover(bb, h);
+      if (i % (sm ? 4 : 2) === 0) txt(svg, x, H - m.b + 16, (d.lon_from < 0 ? Math.abs(d.lon_from) + "°W" : d.lon_from === 0 ? "0°" : d.lon_from + "°E"), "m s", "middle");
+    });
+    txt(svg, m.l, H - 6, "← west", "m s"); txt(svg, W - m.r, H - 6, "east →", "m s", "end");
+    txt(svg, m.l + 6, m.t + 4, "Inscribed stones", "s b").setAttribute("fill", css("--bri"));
+    txt(svg, W - m.r - 4, m.t + 4, "Anglo-Saxon sites", "s b", "end").setAttribute("fill", css("--ger"));
+  });
+}
+function hillChart() {
+  const box = $("hillc"), C = R.hill.by_country;
+  const rows = Object.entries(C).sort((a, b) => b[1].share - a[1].share);
+  resp(box, (W, sm) => {
+    const rh = 30, m = { l: sm ? 128 : 150, r: 110, t: 4 }, H = m.t + rows.length * rh + 6;
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Share of hillforts with dating evidence for AD 400 to 800 by country" }, box);
+    const max = Math.max(...rows.map(r => r[1].share)), x = v => m.l + v / max * (W - m.l - m.r);
+    rows.forEach(([c, d], i) => {
+      const y = m.t + i * rh;
+      txt(svg, m.l - 8, y + 18, c, "", "end");
+      const r = el("rect", { x: m.l, y: y + 6, width: Math.max(2, x(d.share) - m.l), height: 16, fill: css("--hf") }, svg);
+      txt(svg, x(d.share) + 6, y + 18, `${(100 * d.share).toFixed(1)}%  ${d.dated} of ${fmt(d.n)}`, "m s");
+      hover(r, `<b>${esc(c)}</b><br>${d.dated} of ${fmt(d.n)} hillforts have dating evidence for AD 400 to 800`);
+    });
+  });
+}
+function cards() {
+  const want = ["Tintagel", "Dinas Powys", "Cadbury Castle", "Dunadd", "Dumbarton Rock (Alt Clut)", "Bamburgh (Din Guaire)", "Yeavering (Ad Gefrin)", "Sutton Hoo"];
+  const box = $("cards");
+  box.innerHTML = want.map(n => { const p = P.find(q => q.L === "royal" && q.name === n); if (!p) return ""; return `<div class="card"><b>${esc(p.name)}</b><div class="d">${esc(p.nat)} · ${esc(dateTxt(p).replace(" (own dating evidence)", ""))}</div><div>${esc(p.note.replace(/ \((Wikipedia|Wikidata)[^)]*\.\)$/, ""))}</div><a class="go" data-n="${esc(n)}">Show on map →</a></div>`; }).join("");
+  box.querySelectorAll("a.go").forEach(a => a.onclick = () => { const m = markers.find(mm => mm._p.L === "royal" && mm._p.name === a.dataset.n); if (!m) return; $("lmap").scrollIntoView({ behavior: "smooth", block: "center" }); ON.royal = true; chips(); S.all = true; setPressed("all", true); filterPts(); lmap.setView(m.getLatLng(), 9); setTimeout(() => m.openPopup(), 400); });
+}
+function kingTable() {
+  const t = $("ktab"), K = SITE.kingdoms;
+  const order = { brittonic: 0, irish: 1, pictish: 2, germanic: 3 };
+  const rows = K.slice().sort((a, b) => order[a[1]] - order[b[1]] || b[2] - a[2]);
+  t.innerHTML = `<thead><tr><th>Kingdom</th><th class="wide">First written mention</th><th class="num">Evidence in zone</th></tr></thead><tbody>` + rows.map(k => {
+    const z = SITE.kz[k[0]], tot = z[1] + z[2] + z[3] + z[4];
+    const bar = tot ? `<span class="bar">${[["--ger", z[1]], ["--bri", z[2]], ["--iri", z[3]], ["--pic", z[4]]].map(([c, v]) => v ? `<span style="width:${100 * v / tot}%;background:var(${c})"></span>` : "").join("")}</span>` : `<span class="bar"></span>`;
+    return `<tr><td><b style="color:var(${KC[k[1]]});cursor:pointer" data-k="${esc(k[0])}">${esc(k[0])}</b><small>${KN[k[1]]}</small></td><td class="wide">${esc(k[6])}</td><td class="num">${z[0]}<br>${bar}</td></tr>`;
+  }).join("") + `</tbody>`;
+  t.querySelectorAll("b[data-k]").forEach(b => b.onclick = () => { const m = []; kLabL.eachLayer(x => { if (x._k && x._k[0] === b.dataset.k) m.push(x); }); if (!m.length) return; if (!S.king) { S.king = true; setPressed("vKing", true); applyLayers(); } $("lmap").scrollIntoView({ behavior: "smooth", block: "center" }); lmap.setView(m[0].getLatLng(), 7.5); setTimeout(() => m[0].openPopup(), 400); });
+}
+function timelineChart() {
+  const box = $("tline"), T = SITE.timeline, E = SITE.events;
+  resp(box, (W, sm) => {
+    const evH = sm ? 150 : 128, H = evH + 190, m = { l: 36, r: 10 };
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Timeline of events and evidence AD 400 to 700" }, box);
+    const x = y => m.l + (y - 400) / 300 * (W - m.l - m.r);
+    // events
+    el("rect", { x: x(536), y: 4, width: Math.max(2, x(549) - x(536)), height: H - 34, fill: css("--hot"), opacity: .08 }, svg);
+    const lanes = sm ? 6 : 4; const used = Array(lanes).fill(-1e9);
+    E.forEach(e => {
+      const x0 = x(e[0]), x1 = Math.max(x(e[1]), x0 + 3), lw = e[2].length * 6.6 + 10;
+      let lane = used.findIndex(u => u < x0 - 4); if (lane < 0) lane = lanes - 1; used[lane] = x0 + lw;
+      const yy = 12 + lane * (evH - 20) / lanes;
+      const legend = /legend/.test(e[2]);
+      const r = el("rect", { x: x0, y: yy, width: x1 - x0, height: 8, fill: legend ? "none" : css("--fg"), stroke: css("--fg"), "stroke-dasharray": legend ? "2 2" : "", rx: 1 }, svg);
+      const tl = txt(svg, x0, yy + 20, e[2], "s" + (legend ? " i" : ""));
+      hover(r, `<b>${esc(e[2])}</b><br>${e[0] === e[1] ? e[0] : e[0] + " to " + e[1]}<br>${esc(e[3])}`); hover(tl, `<b>${esc(e[2])}</b><br>${esc(e[3])}`);
+    });
+    // stacked counts of evidence in play
+    const top = evH + 14, bot = H - 28;
+    const keys = ["hillfort", "christian", "royal", "dyke", "germanic", "latin", "pictish", "ogham"];
+    const max = Math.max(...T.map(r => keys.reduce((a, k) => a + r[k], 0)));
+    const yv = v => bot - v / max * (bot - top);
+    const defs = el("defs", {}, svg);
+    keys.forEach(k => { const pt = el("pattern", { id: "h_" + k, width: 5, height: 5, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" }, defs); el("rect", { width: 5, height: 5, fill: css(LAYNAME[k].c), opacity: .25 }, pt); el("line", { x1: 0, y1: 0, x2: 0, y2: 5, stroke: css(LAYNAME[k].c), "stroke-width": 2 }, pt); });
+    const bw = (x(410) - x(400)) * .82;
+    T.forEach(r => {
+      let acc = 0; const xx = x(r.year) - bw / 2;
+      keys.forEach(k => {
+        const s = r[k + "_site"], t = r[k] - s;
+        if (s) { el("rect", { x: xx, y: yv(acc + s), width: bw, height: yv(acc) - yv(acc + s), fill: css(LAYNAME[k].c) }, svg); acc += s; }
+        if (t) { el("rect", { x: xx, y: yv(acc + t), width: bw, height: yv(acc) - yv(acc + t), fill: `url(#h_${k})` }, svg); acc += t; }
+      });
+      const hit = el("rect", { x: xx, y: top, width: bw, height: bot - top, fill: "transparent" }, svg);
+      hover(hit, `<b>AD ${r.year}</b><br>` + keys.filter(k => r[k]).map(k => `${esc(LAYNAME[k].name)}: ${r[k]} (${r[k + "_site"]} own date)`).join("<br>"));
+    });
+    for (let v = 0; v <= max; v += 200) txt(svg, m.l - 6, yv(v) + 4, v, "m s", "end");
+    for (let yr = 400; yr <= 700; yr += 50) txt(svg, x(yr), H - 10, "AD " + yr, "m s", "middle");
+    txt(svg, x(542), 4 + 2, "", "s");
+  });
+}
+function sourcesChart() {
+  const box = $("sources");
+  const S2 = [
+    ["Gildas, De Excidio", 480, 545, null, "Date disputed: the 540s, or perhaps the first quarter of the 6th century or earlier"],
+    ["Bede, Ecclesiastical History", 731, 731, null, "Completed in 731"],
+    ["Historia Brittonum", 800, 830, null, "Early 9th century"],
+    ["Anglo-Saxon Chronicle", 850, 1150, null, "Nine manuscripts and fragments compiled from the 9th to the 12th centuries"],
+    ["Y Gododdin (Book of Aneirin)", 1250, 1300, null, "Poem dated anywhere from the 7th to the early 11th century; the one manuscript is of the later 13th century"]
+  ];
+  resp(box, (W, sm) => {
+    const rh = 34, m = { l: sm ? 10 : 210, r: 14, t: 6 }, H = m.t + S2.length * rh * (sm ? 1.5 : 1) + 30;
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Composition dates of the main written sources" }, box);
+    const x = y => m.l + (y - 400) / 950 * (W - m.l - m.r);
+    el("rect", { x: x(450), y: 0, width: x(550) - x(450), height: H - 24, fill: css("--hot"), opacity: .12 }, svg);
+    S2.forEach((s, i) => {
+      const y = m.t + i * rh * (sm ? 1.5 : 1) + (sm ? 14 : 0);
+      if (sm) txt(svg, m.l, y + 2, s[0], "s b"); else txt(svg, m.l - 8, y + 17, s[0], "s", "end");
+      const r = el("rect", { x: x(s[1]), y: y + 7, width: Math.max(6, x(s[2]) - x(s[1])), height: 14, fill: css("--fg"), rx: 2 }, svg);
+      hover(r, `<b>${esc(s[0])}</b><br>${esc(s[4])}`);
+    });
+    for (let yr = 400; yr <= 1300; yr += 100) { txt(svg, x(yr), H - 6, yr, "m s", "middle"); el("line", { x1: x(yr), x2: x(yr), y1: H - 22, y2: H - 18, stroke: css("--muted") }, svg); }
+  });
+}
+
+/* ===== theme ===== */
+$("theme").onclick = () => { const d = isDark(); document.documentElement.dataset.theme = d ? "light" : "dark"; try { localStorage.setItem("b500_theme", document.documentElement.dataset.theme); } catch (e) {} retheme(); };
+try { const t = localStorage.getItem("b500_theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+function retheme() { if (lmap) { buildZones(); drawPts(); applyLayers(); } redraws.forEach(f => f()); legend(); }
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", retheme);
+
+chips(); legend(); initMap(); filterPts();
+profileChart(); hillChart(); cards(); kingTable(); timelineChart(); sourcesChart();
+</script>
+</body>
+</html>

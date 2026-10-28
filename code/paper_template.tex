@@ -1,0 +1,228 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\newfontfamily\headfont{Inter}[UprightFont=*-ExtraBold,BoldFont=*-ExtraBold,Extension=.otf,Path=/usr/share/fonts/opentype/inter/]
+\usepackage[a4paper,margin=2.3cm]{geometry}
+\usepackage{graphicx,booktabs,float,caption,array}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{setspace}
+\setstretch{1.05}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\titleformat{\section}{\headfont\Large}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\headfont\large}{\thesubsection}{0.8em}{}
+\captionsetup{font=small,labelfont=bf}
+\urlstyle{same}
+\hypersetup{pdftitle={Britain in AD 500: What the Ground Tells Us},pdfauthor={Tristan Hotham}}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries Britain in AD 500: What the Ground Tells Us\\[2pt] Mapping Early Medieval Evidence and Uncertain Kingdoms\\[2pt] in Britain and Ireland from Open Data\par}
+\vspace{1.2em}
+{\large Tristan Hotham\par}
+\vspace{0.3em}
+{\small Independent researcher\\
+ORCID: 0000-0003-4931-9349\\
+DOI: \href{https://doi.org/10.5281/zenodo.23735820}{https://doi.org/10.5281/zenodo.23735820}\par}
+\vspace{0.8em}
+2026
+\end{center}
+
+\begin{quote}
+\small
+\begin{center}\textbf{Abstract}\end{center}
+Popular maps of Britain around AD 500 show a patchwork of kingdoms with firm borders, yet most of those names are first written down centuries later. I build an evidence-led alternative from open data: the Atlas of Hillforts of Britain and Ireland, Wikidata, Ireland's Sites and Monuments Record, Pleiades and Wikipedia. The resulting map places {{n_mapped_not_roman|int}} pieces of early medieval evidence, with {{layers.roman|int}} Roman towns and forts as context, and shows {{kingdoms.n|int}} named kingdoms only as approximate zones with their earliest written mentions. Just {{hill.dated|int}} of {{hill.atlas_total|int}} Atlas hillforts ({{hill.share|pct1}}) have dating evidence for AD 400 to 800; they are more often coastal ({{hill.coastal_share|pct}} against {{hill.coastal_all_share|pct}}) and more often promontory forts ({{hill.promontory_share|pct}} against {{hill.promontory_all_share|pct}}) than hillforts in general. In Great Britain south of the Forth, Anglo-Saxon cemeteries and settlements have a median longitude of {{eastwest.germanic_median_lon|w2}} degrees west and Latin-inscribed stones and western high-status sites {{eastwest.brittonic_median_lon|w2}} degrees west; only {{eastwest.brit_within_50km_of_ger|int}} of {{eastwest.brittonic_n|int}} western sites lies within 50 km of an Anglo-Saxon site, and smoothed density surfaces of the two do not overlap. {{ogham.ireland_share|pct}} of {{ogham.spots|int}} ogham find-spots are in Ireland, and {{latin.wales_share|pct}} of {{latin.n|int}} inscribed stones are in Wales. These are patterns in two burial and commemoration habits recorded unevenly by national heritage systems, not maps of peoples. The interactive version and all data and code are openly available.
+
+\textbf{Keywords:} sub-Roman Britain; early medieval archaeology; hillforts; Anglo-Saxon cemeteries; ogham; inscribed stones; Pictish stones; kingdoms; open data; uncertainty
+\end{quote}
+
+\section{Introduction}
+
+Few periods of British history are mapped as confidently and known as poorly as the decades around AD 500. Maps that circulate widely online show Britain divided into named kingdoms, Gododdin, Rheged, Elmet, Gwynedd, Dumnonia, Kent and others, each with a colour and a border. They are attractive and they make the period feel concrete. But writing from Britain in the century after Roman rule is almost absent. Gildas's \textit{De Excidio et Conquestu Britanniae}, the only substantial British text by a near contemporary, is usually dated to the 540s and may be earlier (Wikipedia contributors 2026a). Bede completed his \textit{Ecclesiastical History} in 731, the \textit{Historia Brittonum} is of the early 9th century, the Anglo-Saxon Chronicle survives in manuscripts compiled from the 9th to the 12th centuries, and the poem \textit{Y Gododdin} survives in one manuscript of the later 13th century (Wikipedia contributors 2026b). Most kingdom names on the popular maps reach us through these later texts.
+
+The ground offers a different kind of evidence: mute, often broadly dated, but contemporary. Some Iron Age hillforts were reoccupied. Communities in the east of England buried their dead with grave goods or cremated them in urns. Christian Britons in the west raised memorial stones with Latin names, and in Ireland, south-west Wales and elsewhere stones were cut with the ogham alphabet. In the Pictish north, carved symbol stones appear. Each of these is recorded, unevenly, in national and open datasets.
+
+This note asks three questions. What can open data place on a map of Britain and Ireland around AD 500? Which spatial patterns are strong enough to survive the unevenness of that data? And how do the kingdoms named in the later sources sit against the evidence on the ground? The aim is not a new map of kingdoms but an honest one: the named kingdoms are shown as labelled, approximate zones with a note on where each name is first written down, never as bounded territories. An interactive version, with every point clickable and a search for any modern place, is at \url{https://tristan-hotham.github.io/britain-500/}. It builds on my earlier study of lines of sight between hillforts (Hotham 2026).
+
+\section{Data}
+
+\subsection{Hillforts}
+
+The Atlas of Hillforts of Britain and Ireland (Lock and Ralston 2017) records {{hill.atlas_total|int}} hillforts with a large set of fields, including flags for dating evidence in each of several periods and a rating of the reliability of that dating. I downloaded the Atlas from its public ArcGIS service on 28 October 2026. A hillfort enters the early medieval layer if the Atlas marks dating evidence for AD 400 to 800. The Atlas's free-text dating note and reliability rating are kept with each record.
+
+\subsection{Wikidata}
+
+From Wikidata (CC0) I took every item in the United Kingdom, Ireland and the Isle of Man whose type matches a broad list of site kinds: cemeteries, burials and barrows, inscribed stones, ogham stones, Pictish stones, crosses, churches and monasteries, forts and hillforts, settlements and archaeological sites. {{coverage.wd_items_frame|int}} items have coordinates within my frame (11.0 degrees west to 2.1 degrees east, 49.8 to 61.0 degrees north). The query and its results are part of the published data.
+
+\subsection{Ireland's Sites and Monuments Record}
+
+The National Monuments Service's Sites and Monuments Record (CC BY 4.0) covers the Republic of Ireland. I used its ogham stones recorded at their original locations ({{ogham.smr_ogham|int}} records; {{ogham.smr_ogham_moved|int}} further records give stones at their present locations and were not used).
+
+\subsection{Pleiades and Wikipedia}
+
+Pleiades (CC BY 3.0), the gazetteer of ancient places, supplies Roman towns and forts with precise locations and its period tags, including Late Antique (AD 300 to 640). English Wikipedia (CC BY-SA 4.0) supplies the text and, where available, the coordinates for a short list of named high-status sites, three dykes and {{kingdoms.n|int}} kingdoms, and the dates of a handful of events. Every Wikipedia statement I rely on is tied to a phrase that the analysis code checks against the downloaded article text.
+
+\subsection{Context layers}
+
+Elevation for hill shading and for land under 5 m above sea level comes from AWS Terrain Tiles at zoom 10. Coastlines are from Natural Earth, modern borders from the Office for National Statistics and Natural Earth, Roman roads from Itiner-e (de Soto et al. 2025), and modern place names for search from OS Open Names and GeoNames.
+
+\section{Methods}
+
+\subsection{Building the layers}
+
+Wikidata items were filtered hard, because most churches, crosses and barrows in the query are much later or earlier than the period. Anglo-Saxon sites are items whose names or descriptions mark them as Anglo-Saxon, Anglian or early Saxon cemeteries, burials or settlements; I excluded items described as middle or late Saxon, burhs, churches, crosses and dykes, and kept them only in Great Britain. Latin inscribed stones are Wikidata inscribed stones in Britain, excluding cross-carved slabs and Pictish, runic and Roman stones, and excluding Scotland north of 56 degrees north. Pictish stones are Wikidata Pictish stones and symbol stones in Scotland. Early churches and monasteries are items with a Wikidata start date between 400 and 700 (where Wikidata stores a century as its first year, for example 501 for the 6th century, I read it as the century), plus Irish sites named as early medieval ecclesiastical sites. Ogham records from Wikidata and the Irish record were merged into find-spots where they lay within 300 m of each other: {{ogham.records|int}} records became {{ogham.spots|int}} find-spots, because several databases describe the same stones. A small residual layer holds other sites whose names call them early medieval, with no cultural label. Where a Wikidata site duplicated one of my hand-listed high-status sites it was kept once.
+
+\subsection{Dates}
+
+{{site_dated_total|int}} pieces of evidence have a date range of their own: the Atlas's AD 400 to 800 band, a Wikidata start date, or a date in the Wikipedia text for the high-status sites and dykes. The other {{type_dated_total|int}} carry a typical range for their kind of site: Anglo-Saxon cemeteries 450 to 650, ogham stones 400 to 600 (the Wikipedia article on ogham says the stone inscriptions flourished in the 5th and 6th centuries), Latin stones 400 to 700 and Pictish stones 500 to 850 (the Wikipedia article on Pictish stones gives the 6th to 9th centuries). These typical ranges are deliberately broad. They allow a time slider on the interactive map, but they cannot resolve events within a decade or two.
+
+\subsection{Density surfaces}
+
+To show where each cultural tradition is represented, I counted the evidence for four traditions on a web-mercator grid of about 1.5 km cells and smoothed each count with a Gaussian kernel of {{surfaces.sigma_km|int}} km, scaled to the surface's own 99th percentile and masked to land. Germanic: Anglo-Saxon sites and the Anglian high-status sites. Brittonic: Latin stones and British high-status sites. Irish: ogham find-spots and Dunadd. Pictish: Pictish stones. Hillforts, churches, dykes and Roman sites are not given a culture. A density surface of this kind shows where evidence is dense in the data, not where people of a given language or identity lived.
+
+\subsection{Kingdoms}
+
+For each of the {{kingdoms.n|int}} kingdoms I placed a label at the area its Wikipedia article points to, a capital, a Roman town or a region, and drew a soft circle whose radius (22 to 90 km) is only a guide to scale. The earliest written mention given for each is my summary of the article, with a key phrase checked against the article text. Ireland's many kingdoms are not labelled. I then counted the evidence within each zone's radius by cultural tradition.
+
+\subsection{East and west}
+
+For Great Britain south of 56 degrees north I compared the longitudes of the Anglo-Saxon sites and of the Latin stones with British high-status sites, counted them in half-degree strips, measured the distance from each site to the nearest site of the other group, and measured the area where both normalised density surfaces exceed a tenth of their peak.
+
+\subsection{Roman towns}
+
+To test whether Anglo-Saxon sites lie near Roman towns more often than chance, I measured the distance from each Anglo-Saxon site in England to the nearest of {{roman.england_towns|int}} Roman towns and settlements in Pleiades, and compared it with 2,000 random points on land in England within the bounding box of the Anglo-Saxon sites.
+
+\section{Results}
+
+\subsection{What can be placed}
+
+Table~\ref{tab:layers} lists the layers. The largest are ogham find-spots ({{layers.ogham|int}}), Latin inscribed stones ({{layers.latin|int}}), Pictish stones ({{layers.pictish|int}}) and hillforts with dating evidence for AD 400 to 800 ({{layers.hillfort|int}}). Figure~\ref{fig:map} shows them together with the density surfaces and the kingdom labels.
+
+{{TABLE_LAYERS}}
+
+\begin{figure}[tbp]\centering
+\includegraphics[width=0.8\textwidth]{fig_map.png}
+\caption{Evidence for Britain and Ireland around AD 500. Filled points have their own dating evidence; hollow points are dated only by their type. Haze: kernel density of the evidence for each tradition. Italic names: approximate kingdom zones, not borders.}\label{fig:map}
+\end{figure}
+
+\subsection{Hillforts that were reused}
+
+Only {{hill.dated|int}} of the {{hill.atlas_total|int}} hillforts in the Atlas ({{hill.share|pct1}}) have dating evidence for AD 400 to 800 (Table~\ref{tab:hill}, Figure~\ref{fig:hill}). {{hill.by_country.Scotland.dated|int}} are in Scotland, {{hill.by_country.England.dated|int}} in England, {{hill.by_country.Wales.dated|int}} in Wales, {{hill.by_country.Isle of Man.dated|int}} on the Isle of Man, {{hill.by_country.Northern Ireland.dated|int}} in Northern Ireland and {{hill.by_country.Republic of Ireland.dated|int}} in the Republic of Ireland. The Isle of Man stands out: {{hill.by_country.Isle of Man.share|pct}} of its {{hill.by_country.Isle of Man.n|int}} hillforts carry this flag.
+
+{{TABLE_HILL}}
+
+The reused hillforts differ from hillforts in general. {{hill.coastal_share|pct}} are recorded as coastal, against {{hill.coastal_all_share|pct}} of all hillforts, and {{hill.promontory_share|pct}} as promontory forts, against {{hill.promontory_all_share|pct}}. Their median enclosed area ({{hill.area_med|f2}} ha) is close to that of all hillforts ({{hill.area_med_all|f2}} ha). {{hill.also_roman|int}} also have dating evidence for AD 50 to 400 and {{hill.also_iron_age|int}} for the Iron Age. The Atlas rates the dating as high or medium for {{hill.reliable_ab|int}} of the {{hill.dated|int}} and as none for {{hill.no_reliability|int}}; {{hill.radiocarbon|int}} dating notes mention radiocarbon dates.
+
+\begin{figure}[tbp]\centering
+\includegraphics[width=\textwidth]{fig_hillforts.png}
+\caption{Left: share of Atlas hillforts with dating evidence for AD 400 to 800, by country. Right: reused hillforts are more often coastal and more often promontory forts than all hillforts.}\label{fig:hill}
+\end{figure}
+
+\subsection{An east of graves and a west of stones}
+
+In Great Britain south of the Forth the two culturally distinctive layers occupy different halves of the island (Figure~\ref{fig:profile}). The {{eastwest.germanic_n|int}} Anglo-Saxon sites have a median longitude of {{eastwest.germanic_median_lon|w2}} degrees west, and {{eastwest.germanic_east_of_m2|pct}} lie east of 2 degrees west. The {{eastwest.brittonic_n|int}} Latin stones and British high-status sites have a median longitude of {{eastwest.brittonic_median_lon|w2}} degrees west, and {{eastwest.brittonic_west_of_m3|pct}} lie west of 3 degrees west. The median distance from a western site to the nearest Anglo-Saxon site is {{eastwest.brit_to_ger_med_km|int}} km; only {{eastwest.brit_within_50km_of_ger|int}} western site has an Anglo-Saxon site within 50 km, and {{eastwest.ger_within_50km_of_brit|int}} Anglo-Saxon sites have a western site within 50 km. Where each normalised surface exceeds a tenth of its peak, the Germanic surface covers {{surfaces.germanic_km2|int}} km\textsuperscript{2} and the Brittonic {{surfaces.brittonic_km2|int}} km\textsuperscript{2}, and the two do not overlap at all.
+
+\begin{figure}[tbp]\centering
+\includegraphics[width=\textwidth]{fig_profile.png}
+\caption{Anglo-Saxon cemeteries, burials and settlements and Latin inscribed stones with British high-status sites, Great Britain south of the Forth, in half-degree strips of longitude. Dotted lines: medians.}\label{fig:profile}
+\end{figure}
+
+\subsection{The Irish Sea}
+
+{{ogham.ireland_share|pct}} of the {{ogham.spots|int}} ogham find-spots are in Ireland; Wikidata records only {{ogham.by_nation.Wales|int}} in Wales, although the Wikipedia article on ogham states that the largest number outside Ireland is in Pembrokeshire. The reason is a recording convention: most Welsh stones appear in Wikidata as ``inscribed stones'', whatever their alphabets. The inscribed stones themselves concentrate in the west: {{latin.wales_share|pct}} of the {{latin.n|int}} are in Wales, and {{latin.dyfed|int}} ({{latin.dyfed_share|pct}}) in the old county of Dyfed in the south-west (Figure~\ref{fig:irishsea}). This matches the written record in outline. Wikipedia's article on Dyfed states that its royal line was founded by Irish settlers in the 5th century, and a memorial stone from Castell Dwyran of about 550, in Latin and ogham, gives a king the late Roman title of protector; he is often identified with Vortipor, whom Gildas names as ruler of the Demetae, though the spellings differ and the identification is doubted by some (Wikipedia contributors 2026a; 2026c). Brycheiniog was probably founded by Irish raiders in the late 5th century, and Dál Riata spanned the sea between Argyll and Antrim, with Dunadd thought to be its chief seat (Wikipedia contributors 2026c).
+
+\begin{figure}[tbp]\centering
+\includegraphics[width=0.72\textwidth]{fig_irishsea.png}
+\caption{The Irish Sea: ogham find-spots, Latin inscribed stones, reused hillforts, early churches and high-status sites, with kingdom labels.}\label{fig:irishsea}
+\end{figure}
+
+\subsection{Kingdoms against the evidence}
+
+Table~\ref{tab:kingdoms} and Figure~\ref{fig:kingdoms} set each kingdom zone against the evidence inside it. In the zones I drew for the southern and eastern Anglo-Saxon kingdoms, Kent, Sussex, the East Angles and the Gewisse, at least nine in ten of the culturally labelled pieces of evidence are Anglo-Saxon; in Gwynedd, Dyfed, Glywysing and Brycheiniog at least nine in ten are British. In the north the picture is thin. Gododdin's zone, around Edinburgh and Traprain Law, holds Pictish stones from across the Forth and hillforts without a cultural label, but no evidence that is distinctively British. The zones for Elmet, Ebrauc and Pengwern hold one piece of evidence each, and Ergyng's holds none.
+
+{{TABLE_KINGDOMS}}
+
+\begin{figure}[tbp]\centering
+\includegraphics[width=\textwidth]{fig_kingdoms.png}
+\caption{Evidence within each kingdom zone, by tradition. Zone sizes are approximate and are the author's.}\label{fig:kingdoms}
+\end{figure}
+
+\subsection{Roman towns}
+
+Pleiades places {{roman.towns|int}} Roman towns and settlements and {{roman.forts|int}} forts in the frame with precise locations; it tags {{roman.late_town_share|pct}} of the towns and {{roman.late_fort_share|pct}} of the forts with its Late Antique period. Anglo-Saxon sites in England lie closer to Roman towns than random points do: a median of {{roman.ger_town_med_km|f1}} km to the nearest town against {{roman.random_town_med_km|f1}} km, with {{roman.ger_within_10km_town|pct}} within 10 km against {{roman.random_within_10km_town|pct}}.
+
+\subsection{Dating and the 530s}
+
+Most of the evidence cannot be dated closely enough to see change within the period. At AD 500 the time slider shows {{timeline_ad500.hillfort|int}} hillforts, {{timeline_ad500.germanic|int}} Anglo-Saxon sites, {{timeline_ad500.latin|int}} Latin stones, {{timeline_ad500.ogham|int}} ogham find-spots and {{timeline_ad500.christian|int}} churches and monasteries, but only {{timeline_ad500.christian_site|int}} of those churches have a start date of their own. Two well-documented shocks of the mid 6th century, the volcanic cooling that began in 536 and the plague of Justinian, which burials at Edix Hill near Cambridge show reached Britain (Wikipedia contributors 2026d), cannot be seen in data dated this broadly. Figure~\ref{fig:sources} shows why the written sources cannot fill the gap.
+
+\begin{figure}[tbp]\centering
+\includegraphics[width=\textwidth]{fig_sources.png}
+\caption{When the main written sources for Britain around AD 500 were composed, or (Anglo-Saxon Chronicle, \textit{Y Gododdin}) when their surviving manuscripts were made, against the band AD 450 to 550.}\label{fig:sources}
+\end{figure}
+
+\clearpage
+\section{Discussion}
+
+The strongest result is the east and west contrast, and it should be read with care. It is a contrast between two habits, furnished burial and cremation in the east and Latin-inscribed commemoration in the west, not between two populations. Many people in eastern England, and most people in the west, are invisible in both layers. The habits are also recorded differently: Welsh scheduled monuments are named in a way that makes inscribed stones easy to find in Wikidata, while English scheduled monuments name Anglo-Saxon cemeteries only sometimes. Even so, a contrast this sharp, with no overlap in the smoothed surfaces and a gap of a hundred kilometres or more between the median western site and its nearest Anglo-Saxon neighbour, is unlikely to be an artefact of recording alone. It matches the long-standing picture of an eastern zone of early Anglo-Saxon burial and a western zone of Christian inscribed stones.
+
+The hillfort result fits the excavated sites that dominate accounts of the period, such as Tintagel, Dinas Powys, Cadbury Castle, Dunadd and Dumbarton Rock: reused forts were disproportionately coastal promontories. One plausible reading is that small, defensible coastal sites suited elites whose power rested on sea-borne exchange; another is that coastal promontory forts have simply been excavated and dated more often. My data cannot separate the two.
+
+The kingdom zones are the least secure part of the map, by design. They show where a name belongs according to the article that describes it, and the evidence counts show which zones have archaeology that matches the cultural label of the kingdom. That match is strong in the south and in Wales, partly because the cultural labels of the evidence and the kingdoms are drawn from the same broad east and west division. In the north, where the named kingdoms of the Old North are central to the popular maps, the evidence in my layers says little about who ruled where.
+
+\section{Limitations}
+
+Coverage is the main limitation. Wikidata coverage differs by country and by heritage agency. The Anglo-Saxon layer holds {{layers.germanic|int}} sites, far fewer than are known from excavation. Pictish stones number about {{pictish.wikipedia_survive|int}} according to Wikipedia, and my layer has {{pictish.n|int}}. Ogham stones in Wales are recorded as inscribed stones and are under-counted in the ogham layer. Ireland's Sites and Monuments Record covers only the Republic. Many inscribed stones have been moved into churches and museums, so their coordinates may not be where they stood. The typical date ranges for broadly dated evidence are mine, informed by the Wikipedia articles, and the Wikidata start dates for churches are of uneven quality. The density surfaces depend on the kernel size. Kingdom placements and radii are my own approximations. The low-lying land layer uses modern elevations, and coasts and drainage have changed since AD 500. The comparison with Roman towns uses a simple random baseline that does not control for soils, rivers or later landscape history.
+
+\section{Conclusion}
+
+Starting from the ground rather than the texts gives a map that is patchier and less colourful than the familiar kingdom maps, but more honest about what is known. Three patterns survive the unevenness of open data: a sharp contrast between an eastern zone of Anglo-Saxon burial and a western zone of inscribed stones; a small set of reused hillforts that lean strongly towards the coast; and an Irish Sea world in which ogham and Irish-founded dynasties tie Ireland to western Britain. The named kingdoms can be placed only roughly, and for most of the north the evidence in these layers cannot confirm them. Better open records, especially for early Anglo-Saxon cemeteries and for ogham and inscribed stones in Britain, would sharpen every part of this picture.
+
+\section*{Data and code availability}
+
+The data and code are at \url{https://github.com/Tristan-Hotham/britain-500} and archived with this paper at \url{https://doi.org/10.5281/zenodo.23735820}. The interactive version is at \url{https://tristan-hotham.github.io/britain-500/}. Derived data and text are released under CC BY-SA 4.0, as they build on the Atlas of Hillforts and Wikipedia; the code is released under the MIT licence.
+
+\section*{AI statement}
+
+I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.
+
+\section*{References}
+\footnotesize
+de Soto, P., Pa\v{z}out, A., Brughmans, T. and others (2025) Itiner-e: a high-resolution dataset of roads of the Roman Empire. \textit{Scientific Data}. Dataset: \url{https://zenodo.org/records/17122148} (CC BY 4.0).
+
+GeoNames (2026) cities1000. \url{https://www.geonames.org} (CC BY 4.0).
+
+Hotham, T. (2026) Within Sight: could Britain and Ireland's hillforts see each other? \url{https://tristan-hotham.github.io/within-sight/}
+
+Lock, G. and Ralston, I. (2017) \textit{Atlas of Hillforts of Britain and Ireland}. \url{https://hillforts.arch.ox.ac.uk} (CC BY-SA 4.0).
+
+Mapzen and Tilezen (2026) AWS Terrain Tiles (terrarium). \url{https://github.com/tilezen/joerd/blob/master/docs/attribution.md}
+
+National Monuments Service (2026) Sites and Monuments Record, Archaeological Survey of Ireland. \url{https://www.archaeology.ie} (CC BY 4.0).
+
+Natural Earth (2026) 1:10m cultural and physical vectors. \url{https://www.naturalearthdata.com} (public domain).
+
+Office for National Statistics (2026) Counties boundaries. Open Government Licence v3.0.
+
+Ordnance Survey (2026) OS Open Names. Open Government Licence v3.0. \url{https://www.ordnancesurvey.co.uk/products/os-open-names}
+
+Pleiades (2026) Pleiades: a gazetteer of past places. \url{https://pleiades.stoa.org} (CC BY 3.0).
+
+Wikidata contributors (2026) Wikidata. \url{https://www.wikidata.org} (CC0).
+
+Wikipedia contributors (2026a) De Excidio et Conquestu Britanniae; Gildas. \url{https://en.wikipedia.org/wiki/De_Excidio_et_Conquestu_Britanniae}
+
+Wikipedia contributors (2026b) Historia Brittonum; Anglo-Saxon Chronicle; Y Gododdin; Deira. \url{https://en.wikipedia.org}
+
+Wikipedia contributors (2026c) Ogham; Kingdom of Dyfed; Brycheiniog; Dál Riata; Dunadd; Pictish stone. \url{https://en.wikipedia.org}
+
+Wikipedia contributors (2026d) Volcanic winter of 536; Plague of Justinian. \url{https://en.wikipedia.org}
+
+Wikipedia contributors (2026e) The articles on each kingdom and site listed in Table~\ref{tab:kingdoms} and in the data file \texttt{kingdoms.csv}. \url{https://en.wikipedia.org}
+
+All Wikipedia articles retrieved 28 October 2026, text under CC BY-SA 4.0.
+\end{document}
